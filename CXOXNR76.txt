@@ -1,0 +1,212 @@
+ &dot./ ADD NAME=DNDNNR76
+
+ /* @SkipLine~6                        */
+ /* @PageSize~16                       */
+ /* @SummaryTitle~NET ACQUIRER SUMMARY */
+
+ /* +STAR1R-005-002LINE0004 */
+struct hSTARAcquirerLineFour1          // sizeof 133
+{
+   char cSpace1;                       // 0000
+   char sTerminalOwner[15];            // 0001
+   char sNET_INST_ID_CODE0[7];         // 0016 ~NETWORK_DISPUTE,NET_INST_ID_CODE0
+   char sFiller[80];                   // 0023
+   char sDATE_RECON[30];               // 0103 ~NETWORK_DISPUTE,DATE_RECON,F(NR78)
+};
+
+ /* +STAR1R-005-002LINE0004 */
+struct hSTARAcquirerLineFour2          // sizeof 133
+{
+   char cSpace1;                       // 0000
+   char sTerminalOwner[15];            // 0001
+   char sNET_INST_ID_CODE0[7];         // 0016 ~NETWORK_DISPUTE,INST_ID,F(NR79)
+   char sFiller[110];                  // 0023
+};
+
+ /* +STAR1R-005-002LINE0004 */
+struct hSTARAcquirerLineFour3          // sizeof 133
+{
+   char cSpace1;                       // 0000
+   char sTerminalOwner[15];            // 0001
+   char sNET_INST_ID_CODE0[7];         // 0016 ~NETWORK_DISPUTE,PROC_ID,F(NR83)
+   char sFiller[110];                  // 0023
+};
+
+ /* +STAR1R-005-002LINE0012 */
+struct hSTARAcquirerLineTwelve1        // sizeof 132
+{
+   char sCASE_NO[9];                   // 0000
+   char cSpace1;                       // 0009
+   char sTSTAMP_LOCAL[14];             // 0010
+   char cSpace2;                       // 0024
+   char sRETRIEVAL_REF_NO[8];          // 0025
+   char cSpace3;                       // 0033
+   char sNET_INST_ID_CODE1[6];         // 0034
+   char cSpace4;                       // 0040
+   char sPAN[19];                      // 0041
+   char cSpace5;                       // 0060
+   char sAMT_TRAN[11];                 // 0061
+   char cSpace6;                       // 0072
+   char sNET_PROC_CODE[4];             // 0073 ~NETWORK_DISPUTE,NET_PROC_CODE
+};
+
+ /* +STAR1R-005-002LINE0012 */
+struct hSTARAcquirerLineTwelve2        // sizeof 132
+{
+   char sCASE_NO[9];                   // 0000 ~NETWORK_DISPUTE,NETWORK_CASE_NO
+   char cSpace1;                       // 0009 
+   char sTSTAMP_LOCAL[14];             // 0010 ~NETWORK_DISPUTE,TSTAMP_LOCAL,F(NR84)
+   char cSpace2;                       // 0024 
+   char sRETRIEVAL_REF_NO[8];          // 0025 ~NETWORK_DISPUTE,RETRIEVAL_REF_NO
+   char cSpace3;                       // 0033 
+   char sNET_INST_ID_CODE1[6];         // 0034 ~NETWORK_DISPUTE,NET_INST_ID_CODE1
+   char cSpace4;                       // 0040 
+   char sPAN[19];                      // 0041 ~NETWORK_DISPUTE,PAN
+   char cSpace5;                       // 0060
+   char sAMT_TRAN[11];                 // 0061 ~NETWORK_DISPUTE,AMT_TRAN
+   char cSpace6;                       // 0072
+   char sPROCESS_CODE[4];              // 0073 ~NETWORK_DISPUTE,PROCESS_CODE,F(NR82)
+   char cSpace7;                       // 0077
+   char sAMT_FE70[10];                 // 0078 ~NETWORK_DISPUTE,AMT_FE70
+   char cSpace8;                       // 0088
+   char sFE70_IMPACT_TO_ACQ[2];        // 0089 ~NETWORK_DISPUTE,FE70_IMPACT_TO_ACQ
+   char cSpace9;                       // 0091
+   char sREASON_CODE_DESC[26];         // 0092 ~NETWORK_DISPUTE,REASON_CODE_DESC
+   char cSpace10;                      // 0118
+   char sAMT_ADJUSTMENT[10];           // 0119 ~NETWORK_DISPUTE,AMT_ADJUSTMENT
+   char cSpace11;                      // 0129
+   char sADJ_IMPACT_TO_ACQ[2];         // 0130 ~NETWORK_DISPUTE,ADJ_IMPACT_TO_ACQ
+};
+
+
+ /* +STAR1R-005-002LINE0013 */
+struct hSTARAcquirerLineThirteen       // sizeof 54
+{
+   char sFiller1[8];                   // 0000
+   char sCARD_ACPT_TERM_ID[10]         // 0008 ~NETWORK_DISPUTE,CARD_ACPT_TERM_ID
+   char sFiller2[16];                  // 0018
+   char sREQUEST_TYPE[20];             // 0034 ~NETWORK_DISPUTE,REQUEST_TYPE,F(NR80)
+};
+
+ /* +STAR1R-005-002LINE0014 */
+struct hSTARAcquirerLineFourteen       // sizeof 132
+{
+   char sDate_adj_desc[5];             // 0000
+   char cSpace1;                       // 0005
+   char sDATE_ADJUSTMENT[8];           // 0006 ~NETWORK_DISPUTE,DATE_ADJUSTMENT,F(NR85)
+   char sFiller[54];                   // 0014
+   char sEMS_COMMENT[64];              // 0068 ~NETWORK_DISPUTE,EMS_COMMENT
+};
+
+ /* +STAR1R-005-002LINE0015 */
+struct hSTARAcquirerLineFifteen        // sizeof 100
+{
+   char cSpace1;                       // 0000
+   char sExceptionWith[15];            // 0001
+   char sCARD_ACPT_NAME_LOC[84];       // 0016 ~NETWORK_DISPUTE,CARD_ACPT_NAME_LOC
+};
+
+
+ /* +STAR1R-005-003LINE0004 */
+struct hSTARIssuerLineFour1            // sizeof 133
+{
+   char cSpace1;                       // 0000
+   char sIssuerTag[7];                 // 0001
+   char sNET_INST_ID_CODE0[7];         // 0008 ~NETWORK_DISPUTE,NET_INST_ID_CODE0
+   char sFiller[88];                   // 0015
+   char sDATE_RECON[30];               // 0103 ~NETWORK_DISPUTE,DATE_RECON,F(NR78)
+};
+
+ /* +STAR1R-005-003LINE0004 */
+struct hSTARIssuerLineFour2            // sizeof 133
+{
+   char cSpace1;                       // 0000
+   char sIssuerTag[7];                 // 0001
+   char sINST_ID[7];                   // 0008 ~NETWORK_DISPUTE,INST_ID,F(NR79)
+   char sFiller[118];                  // 0015
+};
+
+ /* +STAR1R-005-003LINE0004 */
+struct hSTARIssuerLineFour3            // sizeof 133
+{
+   char cSpace1;                       // 0000
+   char sIssuerTag[7];                 // 0001
+   char sPROC_ID[7];                   // 0008 ~NETWORK_DISPUTE,PROC_ID,F(NR83)
+   char sFiller[118];                  // 0015
+};
+
+ /* +STAR1R-005-003LINE0011 */
+struct hSTARIssuerLineEleven1          // sizeof 133
+{
+   char sPAN[19];                      // 0000
+   char cSpace1;                       // 0019
+   char sAMT_TRAN[16];                 // 0020
+   char cSpace2;                       // 0036
+   char sNET_PROC_CODE[6];             // 0037 ~NETWORK_DISPUTE,NET_PROC_CODE
+};
+
+ /* +STAR1R-005-003LINE0011 */
+struct hSTARIssuerLineEleven2          // sizeof 133
+{
+   char sPAN[19];                      // 0000 ~NETWORK_DISPUTE,PAN
+   char cSpace1;                       // 0019
+   char sAMT_TRAN[16];                 // 0020 ~NETWORK_DISPUTE,AMT_TRAN
+   char cSpace2;                       // 0036
+   char sPROCESS_CODE[6];              // 0037 ~NETWORK_DISPUTE,PROCESS_CODE,F(NR82)
+   char cSpace3;                       // 0043
+   char sLocalTermOwn[7];              // 0044
+   char cSpace4;                       // 0051
+   char sTermId[7];                    // 0052
+   char cSpace5;                       // 0059
+   char sCARD_ACPT_TERM_ID[11];        // 0060 ~NETWORK_DISPUTE,CARD_ACPT_TERM_ID
+   char cSpace6;                       // 0071
+   char sRETRIEVAL_REF_NO[8];          // 0072 ~NETWORK_DISPUTE,RETRIEVAL_REF_NO
+   char cSpace7;                       // 0080
+   char sTSTAMP_LOCAL[14];             // 0081 ~NETWORK_DISPUTE,TSTAMP_LOCAL,F(NR84)
+   char cSpace8;                       // 0095
+   char sAMT_FE70[12];                 // 0096 ~NETWORK_DISPUTE,AMT_FE70
+   char cSpace9;                       // 0108
+   char sFE70_IMPACT_TO_ACQ[2];        // 0109 ~NETWORK_DISPUTE,FE70_IMPACT_TO_ACQ
+   char cSpace10;                      // 0111
+   char sAMT_ADJUSTMENT[18];           // 0112 ~NETWORK_DISPUTE,AMT_ADJUSTMENT
+   char cSpace11;                      // 0130
+   char sADJ_IMPACT_TO_ACQ[2];         // 0131 ~NETWORK_DISPUTE,ADJ_IMPACT_TO_ACQ
+};
+
+ /* +STAR1R-005-003LINE0012 */
+struct hSTARIssuerLineTwelve           // sizeof 133
+{
+   char sCASE_NO[12];                  // 0000 ~NETWORK_DISPUTE,NETWORK_CASE_NO
+   char cSpace1;                       // 0012
+   char sAcct_info_title[10];          // 0013
+   char cSpace2;                       // 0023
+   char sAcct_type[4];                 // 0024
+   char cSpace3;                       // 0028
+   char sAcct_number[22];              // 0029
+   char cSpace4;                       // 0051
+   char sREQUEST_TYPE[20];             // 0052 ~NETWORK_DISPUTE,REQUEST_TYPE,F(NR80)
+   char sFiller[9];                    // 0072
+   char sREASON_CODE_DESC[52];         // 0081 ~NETWORK_DISPUTE,REASON_CODE_DESC
+};
+
+ /* +STAR1R-005-003LINE0013 */
+struct hSTARIssuerLineThirteen         // sizeof 133
+{
+   char sDate_adj_desc[6];             // 0000
+   char cSpace1;                       // 0006
+   char sDATE_ADJUSTMENT[9];           // 0007 ~NETWORK_DISPUTE,DATE_ADJUSTMENT,F(NR85)
+   char cSpace2;                       // 0016
+   char sOrigDateAdjDesc[14];          // 0017
+   char cSpace3;                       // 0031
+   char sOrigDateAdj[19];              // 0032
+   char cSpace4;                       // 0051
+   char sEMS_COMMENT[81];              // 0052 ~NETWORK_DISPUTE,EMS_COMMENT
+};
+
+ /* +STAR1R-005-003LINE0014 */
+struct hSTARIssuerLineFourteen         // sizeof 100
+{
+   char cSpace1;                       // 0000
+   char sExceptionWith[15];            // 0001
+   char sCARD_ACPT_NAME_LOC[84];       // 0016 ~NETWORK_DISPUTE,CARD_ACPT_NAME_LOC
+};
