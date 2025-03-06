@@ -1,0 +1,111 @@
+openapi: 3.0.0
+info:
+  title: "DataNavigator.Resolve.Cases"
+  description: |
+    Returns list of EMS cases.
+    The request filter array specifies the query search critera.
+    The request column array specifies the result set to return.
+    The result set can contain data from:
+      | column         | value                   |
+      | -------------- | ------------------------|
+      | tag            | EMS_CASE column         |
+      | Transition.tag | EMS_TRANSITION column   |
+      | Phase.tag      | EMS_PHASE column        |
+      | CaseLock.tag   | EMS_CASE_LOCK column    |
+      | History.tag    | EMS_ACCT_HISTORY column |
+      | Comment.tag    | EMS_COMMENT column      |
+      | Fraud.tag      | EMS_FRAUD column        |
+    Available filter and column tags are documented in the DDL for each table
+      (e.g., Install/Platform/DB2zOS/Table/Customer/EMS_CASE.txt).
+# contact
+  version: 1.0.0
+# servers
+    url: https://virtserver.swaggerhub.com/FIS_APIs/DataNavigator.Resolve.Cases/1.0.0
+security:
+  - apiKey: []
+# tags
+paths:
+  /rest/datanavigator/resolve/cases/v1.0.0:
+    post:
+      tags:
+        - developers
+      summary: Returns list of EMS cases.
+      description: |
+        Returns list of EMS cases.
+      operationId: ""
+      security: [apiKey: []]
+# parameters
+# responses_ref
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Request"
+            examples:
+              example1:
+                value:
+                  {
+                    "info":
+                      {
+                        "customer": "GOLD"
+                      },
+                    "tab":
+                      {
+                        "name": "Case",
+                        "filter":
+                          [
+                            {
+                              "column": "AccountNumber",
+                              "operator": "LIKE",
+                              "value": "543210*"
+                            },
+                            {
+                              "column": "CaseNumber",
+                              "operator": "BETWEEN",
+                              "value": "20230420000001~20250420999999"
+                            }
+                          ],
+                        "column":
+                          [
+                            "AccountNumber",
+                            "ReconciliationAmount",
+                            "TransactionDateTime",
+                            "Phase.AdjustmentAmount"
+                          ],
+                      }
+                  }
+components:
+# securitySchemes
+  schemas:
+# Info
+# Filter
+    Column:
+      type: string
+      example:
+        [
+          "AccountNumber",
+          "ReconciliationAmount",
+          "TransactionDateTime",
+          "Phase.AdjustmentAmount"
+        ]
+#~~1 Case
+# Request
+    Row:
+      type: object
+      properties:
+        value:
+          description: Array of strings for each tag name in the column array.
+          type: array
+          items:
+            type: string
+            example:
+              [
+                ["5432109999996789", "$80.00", "2024042016200000", "$20.00"],
+                ["5432109999996789", "$42.00", "2024042016200001", "$42.00"],
+              ]
+# Details
+#~~1 Case
+# Response
+# Error
+# headers
+# responses
