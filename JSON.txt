@@ -1,0 +1,174 @@
+How the Request is Processed in CXOSJX11.cpp
+Based on the source code (CXOSJX11.cpp), the request flow works as follows:
+
+1. Request Structure (from cases.yaml)
+The request comes in JSON format, with key sections like:
+
+json
+Copy
+Edit
+{
+  "info": {
+    "customer": "GOLD"
+  },
+  "tab": {
+    "name": "Case",
+    "filter": [
+      {
+        "column": "AccountNumber",
+        "operator": "LIKE",
+        "value": "543210*"
+      },
+      {
+        "column": "CaseNumber",
+        "operator": "BETWEEN",
+        "value": "20230420000001~20250420999999"
+      }
+    ],
+    "column": [
+      "AccountNumber",
+      "ReconciliationAmount",
+      "TransactionDateTime",
+      "Phase.AdjustmentAmount"
+    ]
+  }
+}
+This JSON request is converted into XML before being processed by CXOSJX11.cpp.
+
+2. How the Request is Processed in the Code
+Step 1: XML Request is Parsed in execute()
+The JSON is likely converted into XML using an external system before reaching CXOSJX11.cpp.
+The execute() function starts processing:
+cpp
+Copy
+Edit
+m_pXMLDocument = new XMLDocument("SOURCE","CXORJX11",&m_hRow,&m_hXMLText);
+This loads the XML request template (CXORJX11.txt).
+The execute() function then clears previous query data and parses the new request.
+Step 2: Filters are Applied in endElement()
+Each filter in the request (like AccountNumber & CaseNumber) is processed here:
+cpp
+Copy
+Edit
+if (strTag == "filter") {
+    if (m_pXMLItem->get("column") == "rows") {
+        setMaxRows(atoi(strValue.c_str()));
+    } else {
+        vector<string> hTag;
+        Buffer::parse(m_pXMLItem->get("column"),".",hTag);
+        if (hTag.size() == 1) hTag.insert(hTag.begin(),"Case");
+        if (hTag.size() == 2) {
+            string strValue(m_pXMLItem->get("value"));
+            std::replace(strValue.begin(),strValue.end(),'*','%');
+            std::replace(strValue.begin(),strValue.end(),'~',',');
+            if (!emssegment::Case::instance()->setBasicPredicate(m_hQuery,hTag[0],hTag[1],m_pXMLItem->get("operator"),strValue)) {
+                string strTxt("Undefined column: ");
+                strTxt += hTag[0];
+                strTxt.append(".",1);
+                strTxt += hTag[1];
+                SOAPSegment::instance()->setMsg("JX11.1","Validation error",strTxt);
+                return false;
+            }
+        }
+    }
+}
+Filters are extracted from XML.
+"LIKE" (*) is replaced with SQL wildcard (%).
+"BETWEEN" (~) is replaced with SQL range syntax.
+If the column is invalid, an error message is set.
+Step 3: SQL Query is Built in execute()
+Once filters are validated, a SQL query is created dynamically:
+cpp
+Copy
+Edit
+m_hQuery.reset();
+emssegment::Case::instance()->join(m_hQuery);
+Sorting Logic is applied:
+cpp
+Copy
+Edit
+if (m_hQuery.getSearchCondition().find("EMS_TRANSITION") == string::npos)
+    m_hQuery.join("EMS_CASE","INNER","EMS_TRANSITION","STATE_TSTAMP","TSTAMP_CREATED");
+Ensures correct database joins.
+Step 4: Database Query Execution
+The query is executed, fetching matching cases:
+cpp
+Copy
+Edit
+auto_ptr<reusable::SelectStatement> pSelectStatement(
+    (reusable::SelectStatement*)database::DatabaseFactory::instance()->create("SelectStatement")
+);
+bool b = pSelectStatement->execute(m_hQuery);
+if (!b || pSelectStatement->getRows() == 0) {
+    m_pXMLDocument->revert();
+    SOAPSegment::instance()->setRtnCde(b ? '2' : '5');
+    return reply();
+}
+If no rows are found, an error response is sent.
+Otherwise, results are formatted into XML.
+3. How the Response is Generated
+The results are stored in XML format, as shown in the CXORJX11.txt template:
+xml
+Copy
+Edit
+<tab>
+  <name>Case</name>
+  <column>AccountNumber</column>
+  <column>ReconciliationAmount</column>
+  <column>TransactionDateTime</column>
+  <column>Phase.AdjustmentAmount</column>
+  <row>
+    <value>5432109999996789</value>
+    <value>$80.00</value>
+    <value>2024042016200000</value>
+    <value>$20.00</value>
+  </row>
+  <row>
+    <value>5432109999996789</value>
+    <value>$42.00</value>
+    <value>2024042016200001</value>
+    <value>$42.00</value>
+  </row>
+</tab>
+The m_pXMLDocument->write("tab") function writes the final XML response.
+4. Final Output (Converted Back to JSON)
+Since the request came in JSON format, the system converts the XML response back to JSON before sending it:
+
+json
+Copy
+Edit
+{
+  "tab": {
+    "name": "Case",
+    "columns": [
+      "AccountNumber",
+      "ReconciliationAmount",
+      "TransactionDateTime",
+      "Phase.AdjustmentAmount"
+    ],
+    "rows": [
+      ["5432109999996789", "$80.00", "2024042016200000", "$20.00"],
+      ["5432109999996789", "$42.00", "2024042016200001", "$42.00"]
+    ]
+  }
+}
+This is done externally after CXOSJX11.cpp completes its execution.
+
+5. Summary of Processing Flow
+Receives JSON request → Converts it to XML.
+Loads XML request template (CXORJX11.txt).
+Extracts filters (AccountNumber LIKE '543210%').
+Builds SQL query dynamically.
+Executes the query on the database.
+Formats results in XML (CXORJX11.txt).
+Sends XML response → Converted to JSON before sending.
+6. Next Steps
+Do you need to modify how filters are applied?
+Do you need to directly support JSON instead of XML?
+Are there errors in the response processing?
+
+
+
+
+
+
