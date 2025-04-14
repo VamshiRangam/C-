@@ -1,0 +1,48 @@
+1R-005-003                                                 FIRST DATA/STAR                                                   PAGE   2
+ 04/13/25                      I S S U E R  A D J U S T M E N T / E X C E P T I O N  R E Q U E S T S                         16:37:05
+ ------------------------------------------------------------------------------------------------------------------------------------
+ ISSUER: 00Q306 - FISR15 - USAA                                                        SETTLEMENT DATE: SUNDAY, APRIL 13, 2025
+ ------------------------------------------------------------------------------------------------------------------------------------
+ EXCEPTION SOURCE: EXCEPTION INITIATED BY OTHER PARTICIPANTS                                        CARD ISSUER ABA: 031000011 -NEAST
+ ------------------------------------------------------------------------------------------------------------------------------------
+ ----CARD NUMBER----     --- ORIGINAL ---   TERM    TERM                SERIAL    TRANSACTION        NON FIN            FINANCIAL
+  CNTRL NO               AUTH TRAN   TYPE   OWNER    ID    LOCAL ATM    NUMBER    DATE   TIME        ADJ AMT             ADJ AMT
+
+ xxxxxxxxxxxxxxxx           118.05   PUR    00F938  PSF938              60001022 03/23 06:20:22                             118.05 DR
+  00002037   ACCT INFO: FND  0                      REPRESENTMENT                5005 - CB REMEDY SUPPLIED
+  ADJ: 04/12/25  ORIG ADJ DATE: 250403              CB REMEDY SUPPLIED
+ EXCEPTION WITH: FDMS - RETAIL ISO I10
+ MERCHANT NAME: RING RING WIRELESS
+
+ xxxxxxxxxxxxxxxx           144.15   PCP    0GB010  PSG010              51732801 03/13 03:44:44                             144.15 DR
+  00001697   ACCT INFO: FND  0                      REPRESENTMENT                6005 - CB REMEDY SUPPLIED
+  ADJ: 04/12/25  ORIG ADJ DATE: 250404              CB REMEDY SUPPLIED
+ EXCEPTION WITH: FDMS-TARGET CORPORATION
+ MERCHANT NAME: TARGET.COM
+
+ 4574310256333791            79.36   PCP    0GB010  PSG010              29730101 03/31 10:35:15                              79.36 DR
+  00004081   ACCT INFO: FND  0                      REPRESENTMENT                4005 - CB REMEDY SUPPLIED
+  ADJ: 04/12/25  ORIG ADJ DATE: 250403              CB REMEDY SUPPLIED
+ EXCEPTION WITH: FDMS-TARGET CORPORATION
+ MERCHANT NAME: TARGET.COM
+
+ xxxxxxxxxxxxxxxx           115.53   PCP    0GB010  PSG010              37070401 03/13 02:05:37                             115.53 DR
+  00001667   ACCT INFO: FND  0                      REPRESENTMENT                6005 - CB REMEDY SUPPLIED
+  ADJ: 04/12/25  ORIG ADJ DATE: 250404              CB REMEDY SUPPLIED
+ EXCEPTION WITH: FDMS-TARGET CORPORATION
+ MERCHANT NAME: TARGET.COM
+
+ xxxxxxxxxxxxxxxx            44.99   IBP    00Q033  PSV033  002         00207117 03/01 03:36:43                              44.99 DR
+  00002977   ACCT INFO: FND  0                      REPRESENTMENT                5005 - CB REMEDY SUPPLIED
+  ADJ: 04/12/25  ORIG ADJ DATE: 250319              SEE ATTACHED MERCH DOCS
+ EXCEPTION WITH: EPOC - CHASE GENERIC BILL PAY CHP3
+ MERCHANT NAME: LA FITNESS
+
+ xxxxxxxxxxxxxxxx            73.84   IBP    00W201  PSW201              00100591 01/15 02:26:19        73.84 DR
+  00004016   ACCT INFO: FND  0                      PRE-ARB RESP NOT RECEIVED    3065 - RESPONSE NOT RECEI
+  ADJ: 04/12/25  ORIG ADJ DATE: 250203              Cardholder maintains dispute as merchant failed to provide t
+ EXCEPTION WITH: WPAY - MICROSOFT
+ MERCHANT NAME:
+
+                                                                                          _____________                 _____________
+                        TOTALS FOR ISSUER   00Q306:                            1 ITEM          73.84 DR    15 ITEMS       2,723.47 DR
