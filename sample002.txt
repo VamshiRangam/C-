@@ -1,0 +1,12 @@
+Hi Team,
+
+Before we start working on the Ethos interchange fees count drop issue, please ensure the following details are collected:
+
+1.	MDS Transaction Volume in DataNavigator: Include volumes for MAP, CRS, and MIP based on Ethos tranact cutoff time.
+2.	Transaction Volume in MDS File: Total number of transactions recorded in the MDS file.
+3.	MDS File Cutoff Time: The cutoff time for the MDS file.
+4.	Number of Authorization Transactions: Transactions with Func_code 100 or Tran_type_id matching the pattern ‘______1___’.
+5.	Transactions with Zero Interchange Fees: Count of transactions with zero interchange fees and the distinct values of their Tran_type_id.
+6.	Daily Exceptions: Number of exceptions recorded per day, including the IXFARE file record count and the reasons for unmatched transactions.
+
+Please try to collect above informations , So that we can conclude whether its really need a code fix or conf adjustment.
