@@ -1,0 +1,81 @@
+//  Copyright (c) 1998 - 2024
+//  FIS
+
+#ifndef CXODRF51_HPP
+#define CXODRF51_HPP
+
+// Mastercard MDS Batch Data
+
+struct hFHDR
+{
+   char sRecordType[4];                // 0000 - 'FHDR'
+   char sSettlementDate[6];            // 0004 DATE_RECON
+   char sFiller1[240];                 // 0010
+};
+
+struct hFREC_NREC
+{
+   char sRecordType[4];                // 0000 - 'FREC'
+   char sSwitchSerialNo[9];            // 0004
+   char cProcessorType;                // 0013 ROLE_IND
+   char sProcessorID[4];               // 0014
+   char sTransactionDate[6];           // 0018 TSTAMP_LOCAL
+   char sTransactionTime[6];           // 0024 TSTAMP_LOCAL
+   char sPANLength[2];                 // 0030
+   char sPAN[19];                      // 0032 PAN
+   char sProcessCode[6];               // 0051 TRAN_TYPE_ID
+   char sTraceNo[6];                   // 0057
+   char sMerchType[4];                 // 0063
+   char sPOSEntry[3];                  // 0067
+   char sReferenceNumber[12];          // 0070 RETRIEVAL_REF_NO
+   char sAcqInstID[10];                // 0082
+   char sTerminalID[10];               // 0092 CARD_ACPT_TERM_ID
+   char sResponseCode[2];              // 0102 TRAN_DISPOSITION
+   char sBrand[3];                     // 0104 TRAN_DISPOSITION
+   char sAdviceReasonCode[7];          // 0107 TRAN_DISPOSITION
+   char sFiller1[10];                  // 0114
+   char sCurTran[3];                   // 0124
+   char cDecimalCurTran;               // 0127
+   char sAmtTran[12];                  // 0128
+   char cAmtTranCreditDebitInd;        // 0140
+   char sAmtCashBack[12];              // 0141
+   char cAmtCashBackCreditDebitInd;    // 0153
+   char sAccessFee[8];                 // 0154 F_AMT0
+   char cAccessFeeCreditDebitInd;      // 0162
+   char sCurSettlement[3];             // 0163 CUR_RECON_NET
+   char cDecimalCurSettlement;         // 0166
+   char sConversionRateSettlement[8];  // 0167
+   char sAmtSettlement[12];            // 0175 AMT_RECON_NET
+   char cAmtSettlementCreditDebitInd;  // 0187
+   char sFiller2[62];                  // 0188
+};
+
+struct hFEER
+{
+   char sRecordType[4];                // 0000 - 'FEER'
+   char sSwitchSerialNo[9];            // 0004
+   char sFeeDescription[40];           // 0013
+   char sMerchantTier[3];              // 0053
+   char sPOSMerchantID[6];             // 0056
+   char sVATAmount[12];                // 0062
+   char sExtdPrecisedItxFee[14];       // 0074 F_AMT90 99999999.999999
+   char cExtdPrecisedItxFeeInd;        // 0088
+   char sExtdPrecisedItxFeeCurCode[3]; // 0089
+   char cExtdPrecisedItxImpliedDecimal;// 0092 '4' to '7'
+   char sSeperateItxFeePaid[14];       // 0093
+   char cSeperateItxFeePaidInd;        // 0107
+   char sConsumptionTax[12];           // 0108
+   char sGratuity[12];                 // 0120
+   char sFiller1[118];                 // 0132
+};
+
+struct hFPST
+{
+   char sRecordType[4];                // 0000 - 'FPST'
+   char sFiller1[20];                  // 0004
+   char sIssInstID[10];                // 0024 INST
+   char sFiller2[216];                 // 0034
+};
+
+#endif
+
