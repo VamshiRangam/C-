@@ -1,0 +1,6 @@
+AI Generalist:
+Foundations of AI and LLMs
+Prompt Engineering, RAGs and Tuning
+Image,Audio and Video Generation
+Automations and AI agents
+Build AI powered Products
