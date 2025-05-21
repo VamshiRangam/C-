@@ -1,0 +1,5 @@
+select * from NQP6USAA.FIN_L202505 where TSTAMP_LOCAL like '20250510%' and 
+PAN IN ('BafErfMINoQdbGmc','BafErfMINoQdbGmc','JjGyrfMIYyYJSKGK','KvFrERwulNxQzXSd','KvFrERwulNxQzXSd',) 
+and 
+RETRIEVAL_REF_NO IN ('513079489799','513076489802')
+
