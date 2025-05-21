@@ -1,0 +1,112 @@
+Okay, I understand. You want the SQL query constructed using **all 47** of the `PAN` values found in the source data, including the duplicates, and also including all the `RETRIEVAL_REF_NO` (RRN) values found across those 47 entries. You are correct that even if a `PAN` value repeats, the `RETRIEVAL_REF_NO` might be different for each transaction entry, or the combination of the two fields could uniquely identify the record you are interested in.
+
+The source file "IXFARE.txt" contains 47 transaction entries, each with a `TSTAMP_LOCAL` value starting with '20250510', a `PAN`-like value, and a `RETRIEVAL_REF_NO`-like value.
+
+Here is the SQL query built with all 47 `PAN` values and all 47 `RETRIEVAL_REF_NO` values found in the source:
+
+```sql
+select * from NQP6USAA.FIN_L202505
+where TSTAMP_LOCAL like '20250510%'
+and PAN IN (
+    'BafErfMINoQdbGmc', --
+    'BafErfMINoQdbGmc', --
+    'JjGyrfMIYyYJSKGK', --
+    'KvFrERwulNxQzXSd', --
+    'KvFrERwulNxQzXSd', --
+    'KvFrERwulNxQzXSd', --
+    'KvFrERwulNxQzXSd', --
+    'KvFrERwulNxQzXSd', --
+    'NfWjhWtZJEIIvIbp', --
+    'NfWjhWtZJEIIvIbp', --
+    'OyTfrfMIKKszmpyY', --
+    'OyTfrfMIKKszmpyY', --
+    'OyTfrfMIKKszmpyY', --
+    'QaVcpCTgDOxDDhCO', --
+    'UMvbrfMICKwyWVrl', --
+    'bvTurfMIpSAHLgAu', --
+    'cgnsmJHLKETHAqii', --
+    'fZQxrfMIMnvGidDL', --
+    'fZQxrfMIMnvGidDL', --
+    'hVRgjKYReoKMLWAi', --
+    'mOBAUPzAnQpqJFxs', --
+    'mOBAUPzAnQpqJFxs', --
+    'mOBAUPzAnQpqJFxs', --
+    'nZlNmJHLdumTNUgG', --
+    'tJKKrfMIPDKqAMMt', --
+    'EoTMyetAqEiwfzLD', --
+    'EoTMyetAqEiwfzLD', --
+    'GjmVMhyIsnldnxat', --
+    'tNMmrfMIftgMKPkl', --
+    'ugoWsKwtnWMnfjFH', --
+    'ugoWsKwtnWMnfjFH', --
+    'vrSHhHpKKqeKUZQu', --
+    'wyfZVAcjwdmspOxD', --
+    'xefuhHpKAqlwzEGE', --
+    'xefuhHpKAqlwzEGE', --
+    'xefuhHpKAqlwzEGE', --
+    'xgTrpCTgtGZHGrdi', --
+    'xgTrpCTgtGZHGrdi', --
+    'xpYFrfMIwSnBQsPQ', --
+    'zGVsERwukSPRSHEU', --
+    'zfQuERwufpaOhfFN', --
+    'zfQuERwufpaOhfFN', --
+    'zfQuERwufpaOhfFN', --
+    'zfQuERwufpaOhfFN', --
+    'zfQuERwufpaOhfFN', --
+    'zpBfpqEYnMMZBPNg', --
+    'zuZWrfMIPDKqRXoH'  --
+)
+and RETRIEVAL_REF_NO IN (
+    '513076489802', --
+    '513079489799', --
+    '513077489797', --
+    '513071489806', --
+    '513072489806', --
+    '513075489806', --
+    '513076489802', --
+    '513078489802', --
+    '513073489800', --
+    '513076489929', --
+    '513071489920', --
+    '513071489920', --
+    '513078489915', --
+    '513007569446', --
+    '513070489801', --
+    '513071489796', --
+    '513075489805', --
+    '513074489800', --
+    '513078489799', --
+    '513075489800', --
+    '513071489923', --
+    '513076489921', --
+    '513077489920', --
+    '513018138674', --
+    '513011394709', --
+    '513076489901', --
+    '513076489902', --
+    '513071489868', --
+    '513079489801', --
+    '513074489796', --
+    '513078489796', --
+    '513022106878', --
+    '513073489811', --
+    '513072489796', --
+    '513074489796', --
+    '513077489796', --
+    '513070489814', --
+    '513075489847', --
+    '513070489823', --
+    '513002593898', --
+    '513071489810', --
+    '513073489796', --
+    '513075489862', --
+    '513077489810', --
+    '513079489810', --
+    '513075489801', --
+    '513070489867'  --
+);
+```
+
+This query will select records from `NQP6USAA.FIN_L202505` for the date '20250510'. It uses the `AND` condition to filter for records where the `PAN` is present in the list of all 47 extracted PANs, *and* the `RETRIEVAL_REF_NO` is present in the list of all 47 extracted RRNs.
+
+As noted before, while the list includes all values found, the structure `PAN IN (...) AND RETRIEVAL_REF_NO IN (...)` will return any row where the `PAN` is in the first list and the `RRN` is in the second list, even if that specific combination of PAN and RRN was not one of the 47 exact pairs in your source data. However, given your request to build the query "like this for all PAN AND RRN", this query includes all the values you specified from the source file.
