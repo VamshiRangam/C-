@@ -1,0 +1,907 @@
+
+```sql
+select * from NQP6USAA.FIN_L202505
+where TSTAMP_LOCAL like '202504%' 
+and
+PAN IN (
+'MVxVpCTguHNDQbjq',
+'MVxVpCTguHNDQbjq',
+'NUBeOVpZXolWYWkj',
+'TLFCrfMIpheQgUYu',
+'WhxhMhyIgVsmlZwv',
+'fnfHrfMIaVhntVFG',
+'fnfHrfMIaVhntVFG',
+'wAfqPBDOMXwSMNgc',
+'wLfsrfMIpjMNkLba',
+'wLfsrfMIpjMNkLba' 
+)
+and
+RETRIEVAL_REF_NO IN (
+'512007063968',
+'512007064023',
+'512007071573',
+'512021190380',
+'512026716185',
+'512007060012',
+'512007060289',
+'512018868154',
+'512007058610',
+'512007058752'
+);
+
+
+
+
+
+```sql
+select * from NQP6USAA.FIN_L202505
+where TSTAMP_LOCAL like '202504%' 
+and
+PAN IN (
+'NfWjUPzAeoKMiefq', 
+'SNnFrfMINoQdQZhO', 
+'TAKorfMIrTzlBVzB', 
+'yMePrfMInNdsFwVr'  
+)
+and
+RETRIEVAL_REF_NO IN (
+ 102-105
+'512207183362', 
+'512207181843', 
+'512227071323', 
+'512207185420'  
+);
+
+
+
+```sql
+select * from NQP6USAA.FIN_L202505
+where TSTAMP_LOCAL like '202504%' -- Applying the timestamp condition from your example (Note: Source file shows 202505 dates)
+and
+PAN IN (
+'HLKOpCTgUbAOcrBS', 
+'HLKOpCTgUbAOcrBS', 
+'HLKOpCTgUbAOcrBS', 
+'HvPajKYRcPBgnDpo', 
+'ILJegTapONFzJuur', 
+'MWLbhWtZtbcpuLou', 
+'ZajmpCTghuBztKbe', 
+'aIhBpCTgmCcrFaCM', 
+'aIhBpCTgmCcrFaCM', 
+'kZkrhHpKaGCXpRpE', 
+'kZkrhHpKaGCXpRpE', 
+'nEkFpCTgFkGYgdsr', 
+'pZtWlFHHBnKdxqLW', 
+'pZtWlFHHBnKdxqLW', 
+'vJXerfMIlvBzZobW'  
+)
+and
+RETRIEVAL_REF_NO IN (
+'512203482954', 
+'512203483491', 
+'512203483503', 
+'512107140666', 
+'512107138082', 
+'512107149250', 
+'512107115487', 
+'512178652891', 
+'512178652891', 
+'512107138276', 
+'512107138309', 
+'512107161540', 
+'512107144019', 
+'512178652896', 
+'512178652896'  
+);
+
+
+
+
+
+
+
+
+```sql
+select * from NQP6USAA.FIN_L202505
+where TSTAMP_LOCAL like '202504%' 
+and
+PAN IN (
+'MxmirfMICKwyhHRB', 
+'YhKgGxVVhyPFvGWt'
+)
+and
+RETRIEVAL_REF_NO IN (
+'512314140341',
+'512406898864'
+);
+
+
+
+
+
+
+
+```sql
+select * from NQP6USAA.FIN_L202505
+where TSTAMP_LOCAL like '202504%'
+and
+PAN IN (
+'EiDqNMQESPFEkvOt', 
+'SVrjxRlpYRYFcykZ', 
+'vLSwpCTglNxQoNZL'  
+)
+and
+RETRIEVAL_REF_NO IN (
+'512401145098', 
+'512490104887', 
+'512511086065' 
+);
+```
+
+
+
+
+
+
+```sql
+select * from NQP6USAA.FIN_L202505
+where TSTAMP_LOCAL like '202504%' 
+and
+PAN IN (
+'AJBKERwunfKOsbaD',
+'AJfCCGERfeuyyDFa',
+'AJfCERwuDJGnwEQr',
+'AQaZUPzAUlKkxCuM',
+'AXXYERwuEWRzJzfM',
+'AXXYERwuUbAOuyPs',
+'BMgDlFHHOIFkAswh',
+'BMgDlFHHOIFkAswh',
+'DCPErfMIJuSgqzSs',
+'DCPErfMIJuSgqzSs',
+'HLKOpCTgUbAOcrBS',
+'HLKOpCTgUbAOcrBS',
+'HLKOpCTgUbAOcrBS',
+'HLKOpCTgUbAOcrBS',
+'HLKOpCTgUbAOcrBS',
+'IxIWJnzRidVvxGwV',
+'KScePBDOUIKNEgYD',
+'RvuGJnzRaGCXJbDU',
+'TWRKrfMIWlzUXnTp',
+'TWRKrfMIWlzUXnTp',
+'TYoiUPzAHDowHlga',
+'TYoiUPzAHDowHlga',
+'TYoiUPzAHDowHlga',
+'VFKorfMIfUBNPrfZ',
+'kKUurfMIpkByTRaI',
+'kKUurfMIpkByTRaI',
+'kKUurfMIpkByTRaI',
+'QSnuOVpZJUnlLZth',
+'RJyiJnzRbemyAauO' 
+)
+and
+RETRIEVAL_REF_NO IN (
+'512625600275', 
+'512522102915', 
+'512622600275', 
+'512625600275', 
+'512625600275', 
+'512626600275', 
+'512517302428', 
+'512517302903', 
+'512574488918', 
+'512577488917', 
+'512521393728', 
+'512521394386', 
+'512521394510', 
+'512522405065', 
+'512522406092', 
+'512572488952', 
+'512575488920', 
+'512578488945', 
+'512570488937', 
+'512577488950', 
+'512504222398', 
+'512504224398', 
+'512504234998', 
+'512579502104', 
+'512519366721', 
+'512520385266', 
+'512521390436', 
+'512520100084', 
+'512513131045'  
+);
+```
+
+
+
+
+
+```sql
+select * from NQP6USAA.FIN_L202505
+where TSTAMP_LOCAL like '202504%'
+and
+PAN IN (
+'ANgUhWtZZEoThwMJ', 
+'ANgUhWtZZEoThwMJ', 
+'ANgUhWtZZEoThwMJ', 
+'BafErfMINoQdbGmc', 
+'DEScxRlpYhKgMNcE', 
+'DEScxRlpYhKgMNcE', 
+'DEScxRlpYhKgMNcE', 
+'DEScxRlpYhKgMNcE', 
+'FNsWrfMIPDKqEHEl', 
+'FNsWrfMIPDKqEHEl', 
+'MlcFJnzRpYttkSGm', 
+'MlcFJnzRpYttkSGm', 
+'PfrDrfMIPDKqhluq', 
+'PfrDrfMIPDKqhluq', 
+'RHgAUPzADJGngAAy', 
+'RHgAUPzADJGngAAy', 
+'RJyiERwuJVSEOvGR', 
+'UkLBhWtZKqeKEiDq', 
+'VqzKhWtZgpCnmkhT', 
+'VqzKhWtZgpCnmkhT', 
+'VqzKhWtZgpCnmkhT', 
+'VqzKhWtZgpCnmkhT', 
+'VqzKhWtZgpCnmkhT', 
+'YLbemJHLOyonJhYj', 
+'YtkqJnzRKejAFaMg', 
+'bRZorfMILDrehCda', 
+'bRZorfMILDrehCda', 
+'bRZorfMILDrehCda', 
+'bRZorfMILDrehCda', 
+'cBYLyetAEVsNBPDe', 
+'cgnsmJHLKETHAqii', 
+'dpIppCTgnfKOcomL', 
+'gAXrsKwtcrCMeoKM', 
+'lRXUrfMIehSWNqsl', 
+'lRXUrfMIehSWNqsl', 
+'mJfCJnzRUHekmqoF', 
+'mJfCJnzRUHekmqoF', 
+'nPYSrfMIxvzNOqeZ', 
+'oPeeJnzRGlSCmgWI', 
+'tfICJnzREgHXHQak', 
+'uPtmrfMIxvzNnlwX', 
+'vCFRERwuAswheNkD', 
+'vCFRERwuAswheNkD', 
+'vCFRERwuAswheNkD', 
+'xsbZrfMIlJwfKmlp', 
+'zuZWERwuKqlMKXAT'  
+)
+and
+RETRIEVAL_REF_NO IN (
+'512673489133', 
+'512675489135', 
+'512677489133', 
+'512676489120', 
+'512670488984', 
+'512670488985', 
+'512672489098', 
+'512676488985', 
+'512670489127', 
+'512670489141', 
+'512676488970', 
+'512679488970', 
+'512671489110', 
+'512671489110', 
+'512616470150', 
+'512616470231', 
+'512670489128', 
+'512673488969', 
+'512612032792', 
+'512612033271', 
+'512613072862', 
+'512613073088', 
+'512614077142', 
+'512628330058', 
+'512675488973', 
+'512672489119', 
+'512672489121', 
+'512673489117', 
+'512674489101', 
+'512674489122', 
+'512677488975', 
+'512619828576', 
+'512672489155', 
+'512673489086', 
+'512677489124', 
+'512617769293', 
+'512617769637', 
+'512607369837', 
+'512601989898', 
+'512675489079', 
+'512670488971', 
+'512673489116', 
+'512675489112', 
+'512677489117', 
+'512673488970', 
+'512711009181'  
+);
+
+
+
+
+
+```sql
+select * from NQP6USAA.FIN_L202505
+where TSTAMP_LOCAL like '202504%'
+and
+PAN IN (
+'BafErfMINoQdbGmc',
+'CEwjhWtZOwMiaDHM',
+'DEScxRlpYhKgMNcE',
+'DEScxRlpYhKgMNcE',
+'DxTkjKYRZAEKHxde',
+'ECwUVAcjPHmXfHxR',
+'ECwUVAcjPHmXfHxR',
+'ExSHUPzAtGZHHWfB',
+'FNsWrfMIPDKqEHEl',
+'GjmVMhyIsnldnxat',
+'HDNzrfMIlhjKqzSs',
+'HzjbrfMIHPaFSpwP',
+'IxIWJnzRidVvxGwV',
+'JKFbVAcjLnjBewvi',
+'JKFbVAcjLnjBewvi',
+'JKFbVAcjLnjBewvi',
+'JKFbVAcjLnjBewvi',
+'KvFrERwulNxQzXSd',
+'KvFrERwulNxQzXSd',
+'KvFrERwulNxQzXSd',
+'KvFrERwulNxQzXSd',
+'KvFrERwulNxQzXSd',
+'KvFrERwulNxQzXSd',
+'KvFrERwulNxQzXSd',
+'KvFrERwulNxQzXSd',
+'KvFrERwulNxQzXSd',
+'LnjBrfMIjCFJbBZi',
+'NsBlhHpKZEoTyJIv',
+'OgYUUPzANnJgbOWO',
+'QjVbhHpKkmrbYiFt',
+'SbzkrfMIaVhngsdH',
+'SbzkrfMIaVhngsdH',
+'SbzkrfMIaVhngsdH',
+'SbzkrfMIaVhngsdH',
+'VBzqERwuVtCqRTKn',
+'VBzqERwuVtCqRTKn',
+'VBzqERwuVtCqRTKn',
+'VBzqERwuVtCqRTKn',
+'VBzqERwuVtCqRTKn',
+'VBzqERwuVtCqRTKn',
+'aNVKxRlpVZpsWqaN',
+'gAXrsKwtcrCMeoKM',
+'mMAPpCTgDOxDeOzB',
+'mMAPpCTgDOxDeOzB',
+'sudQUPzASqLMiDYq',
+'vHQpPaihIRjQzRWf',
+'vUfhpCTgxoitfZQx',
+'wdmsrfMIaErfmGZi',
+'xbgbrfMIlJwfCOZW',
+'xbgbrfMIlJwfCOZW',
+'zxzFERwubMbSsieY',
+'zyuEsKwtKtDYfjgw' 
+)
+and
+RETRIEVAL_REF_NO IN (
+'512772489165', 
+'512772489414', 
+'512777489158', 
+'512777489160', 
+'512713090256', 
+'512702984898', 
+'512702998198', 
+'512774489397', 
+'512776489156', 
+'512771489414', 
+'512777489158', 
+'512776489173', 
+'512777489381', 
+'512770489165', 
+'512772489165', 
+'512774489159', 
+'512774489408', 
+'512771489162', 
+'512771489166', 
+'512771489169', 
+'512773489166', 
+'512773489168', 
+'512774489166', 
+'512777489167', 
+'512778489168', 
+'512778489171', 
+'512707428456', 
+'512779489169', 
+'512771489158', 
+'512770489410', 
+'512773489374', 
+'512778489406', 
+'512779489404', 
+'512779503107', 
+'512770489398', 
+'512770489406', 
+'512773489398', 
+'512774489406', 
+'512775489403', 
+'512776489398', 
+'512779489411', 
+'512776489156', 
+'512772489157', 
+'512776489155', 
+'512713095446', 
+'512701555598', 
+'512707415586', 
+'512707418861', 
+'512723378422', 
+'512723378901', 
+'512773489396', 
+'512729100019'  
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```sql
+SELECT *
+FROM NQP6USAA.FIN_L202505
+WHERE TSTAMP_LOCAL LIKE '202504%' -- Note: Dates in source excerpts are primarily '202505'.
+AND PAN IN (
+    'ANgUpCTgFfzijRoD', -- From source
+    'ANgUpCTgJVSEAHcB', -- From source
+    'ANgUpCTgNbLvbOWO', -- From source
+    'ANgUpCTgNbLvleQG', -- From source
+    'ANgUpCTgSzugHxde', -- From source
+    'ANgUpCTgUPMeAxSO', -- From source
+    'ANgUpCTgUPMeTZVj', -- From source
+    'ANgUpCTgUPMeTzTm', -- From source
+    'ANgUpCTgUPMeiKgg', -- From source
+    'ANgUrfMImHSEVBIK', -- From source
+    'ANgUrfMInNdsjFOo', -- From source
+    'ANgUrfMIpSAHrPYx', -- From source
+    'ANgUrfMIpSAHzQEt', -- From source
+    'AXXYjKYRurLqfZQx', -- From source
+    'AXXYjKYRzboKHWfB', -- From source
+    'AXXYrfMIMJzMnAmU', -- From source
+    'AaEAUPzAcDjflUUS', -- From source
+    'AaEArfMIpheQTcvK', -- From source
+    'AcBGUPzAXEdOqgkN', -- From source
+    'AcBGUPzAelNuVvbj', -- From source
+    'AcBGUPzAlxjGQZXV', -- From source
+    'AcBGUPzAubdRQBkD', -- From source
+    'AcBGUPzAurLqStTX', -- From source
+    'AcBGUPzAzboKyuWS', -- From source
+    'AcBGjKYRAhBArbZF', -- From source
+    'AcBGjKYRBNujVuvt', -- From source
+    'AcBGjKYRDOxDQFvb', -- From source
+    'AcBGjKYRFmTZqQAJ', -- From source
+    'AcBGjKYRJSEZWzoN', -- From source
+    'AcBGjKYROmNHImzg', -- From source
+    'AcBGjKYRQemtAqeE', -- From source
+    'AcBGjKYRUlKkshAb', -- From source
+    'AcBGjKYRfXyqVbbV', -- From source
+    'AcBGjKYRhgtraYrI', -- From source
+    'AcBGjKYRhhKAzkAX', -- From source
+    'AcBGjKYRlUYUHDys', -- From source
+    'AcBGpCTgvMQPeDCC', -- From source
+    'AcBGpCTgxoitozBC', -- From source
+    'AcBGpCTgzbuckZcQ', -- From source
+    'AcBGrfMIBlZHZJXk', -- From source
+    'AcBGrfMICArxFcrU', -- From source
+    'AzAZUPzAByxlwZAw', -- From source
+    'AzAZUPzADJGnFVhV', -- From source
+    'AzAZUPzADOxDtoyR', -- From source
+    'AzAZUPzAItmawTQv', -- From source
+    'AzAZUPzAKqlMuFJQ', -- From source
+    'AzAZUPzANbLvWKrm', -- From source
+    'AzAZUPzAPpVSiyBY', -- From source
+    'AzAZUPzAUJdaLPyS', -- From source
+    'AzAZUPzAXEdOdzDX', -- From source
+    'BMgDrfMIhwMJepwa', -- From source
+    'BMgDrfMIlhjKSOfk', -- From source
+    'BMgDrfMIlhjKgemX', -- From source
+    'BMgDrfMIljyFfXFc', -- From source
+    'BMgDrfMImHSEKpGx', -- From source
+    'BMgDrfMInNdsmpyY', -- From source
+    'BMgDrfMIpSAHiKwI', -- From source
+    'BMgDrfMIpkByfXFc', -- From source
+    'BMgDrfMIqFKdpZvu', -- From source
+    'BRiXrfMIPSkFDEdw', -- From source
+    'BRiXrfMIPSkFudpr', -- From source
+    'BRiXrfMIPaDufYHL', -- From source
+    'BRiXrfMISWpuPBmt', -- From source
+    'BRiXrfMISWpuTKJT', -- From source
+    'BRiXrfMIXMtpqBWS', -- From source
+    'BRiXrfMIZJJCtmxg', -- From source
+    'BRiXrfMIcLgwYnZR', -- From source
+    'CkpRrfMIcFjcFRsk', -- From source
+    'CkpRrfMIclWGyDkw', -- From source
+    'CkpRrfMIhnjhCBhN', -- From source
+    'CkpRrfMIhwMJpzGb', -- From source
+    'CkpRrfMIjSFZrnOe', -- From source
+    'CkpRrfMIqFKdSmTn', -- From source
+    'CkpRrfMIrTzlRXoH', -- From source
+    'CkpRrfMIrTzlyFZK', -- From source
+    'CkpRrfMIrbrDEFcE', -- From source
+    'CkpRrfMIvtCndhcW', -- From source
+    'DOOhpCTgHDowJtYi', -- From source
+    'DOOhpCTgKsyOHJWG', -- From source
+    'DOOhpCTgLGAoozjh', -- From source
+    'DOOhpCTgMQlKuyPs', -- From source
+    'DOOhpCTgRLZwQrCi', -- From source
+    'DPZqrfMIrbrDUSQI', -- From source
+    'DPZqrfMItJNDUbuH', -- From source
+    'DPZqrfMIvtCnyuAY', -- From source
+    'DyxarfMIhnjhIVGL', -- From source
+    'DyxarfMIhnjhjTHW', -- From source
+    'DyxarfMIhwMJfmbs', -- From source
+    'DyxarfMIikYshzVV', -- From source
+    'DyxarfMImfJXCHzl', -- From source
+    'DyxarfMIqdXuMCWM', -- From source
+    'DyxarfMIrbrDZOIm', -- From source
+    'DyxarfMIrbrDoQtU', -- From source
+    'DyxarfMIwuCCatze', -- From source
+    'DyxarfMIxIOYRmNt', -- From source
+    'GXMipCTgfXyqrZUl', -- From source
+    'GXMipCTgpARoZtnT', -- From source
+    'GXMipCTgxoitmCTT', -- From source
+    'GXMirfMIBlZHktxR', -- From source
+    'GXMirfMIDjiPfmbs', -- From source
+    'GXMirfMIFXGAUGPW', -- From source
+    'GXMirfMINoQdzzTj', -- From source
+    'GXMirfMIPSkFWgcl', -- From source
+    'GXMirfMIaVhneHAT', -- From source
+    'GzvLCGERcLgwmjmU', -- From source
+    'GzvLERwuDJGnDJdV', -- From source
+    'GzvLERwuDJGnWrbL', -- From source
+    'GzvLERwuNbLvmYfp', -- From source
+    'GzvLERwuPpVSssYi', -- From source
+    'HDyspCTgOmAYBaFj', -- From source
+    'HDyspCTgVtCqeSQX', -- From source
+    'HDyspCTgXEdOvUYL', -- From source
+    'HDyspCTgvRBAEyhx', -- From source
+    'HDyspCTgzhWQrZUl', -- From source
+    'HDysrfMIBlZHmwNb', -- From source
+    'HDysrfMIFXGAAQaZ', -- From source
+    'HDysrfMIJuSgCHzl', -- From source
+    'HDysrfMIMJzMMcqs', -- From source
+    'HLKOUPzAQREpMFmd', -- From source
+    'HLKOUPzAcTEivKwm', -- From source
+    'HLKOUPzAejVlxIgb', -- From source
+    'HLKOUPzAqbdJWrbL', -- From source
+    'HYGNUPzAUlKkkJWV', -- From source
+    'HYGNUPzAbjUzZsGl', -- From source
+    'HYGNUPzAmVVPpcBn', -- From source
+    'HYGNUPzAtGZHxdpW', -- From source
+    'IjEdUPzAXuIhxTJw', -- From source
+    'IjEdUPzAlNxQwiRk', -- From source
+    'IjEdjKYRmoFkwNCF', -- From source
+    'IjEdjKYRuHNDpxVu', -- From source
+    'IsdjjKYRItmawZAw', -- From source
+    'JSjEERwuucvppxVu', -- From source
+    'JSjEUPzAJaFFNZEQ', -- From source
+    'JSjEUPzAKsyOQeuy', -- From source
+    'JSjEUPzAvRBAkgJI', -- From source
+    'JSjEjKYRFmTZMOSA', -- From source
+    'JSjEjKYRItmaAJMI', -- From source
+    'JSjEjKYRNbLvUHuF', -- From source
+    'JSjEjKYRUJdaaesX', -- From source
+    'JSjEpCTgOmNHBbYR', -- From source
+    'JSjEpCTgpARoAMKk', -- From source
+    'JUzzERwuJVSENgQM', -- From source
+    'JUzzERwuKsyOGYFM', -- From source
+    'JUzzERwuPpVSReIv', -- From source
+    'JXhGUPzAQREpgqEW', -- From source
+    'JXhGjKYRhuBzJRwt', -- From source
+    'JXhGpCTgOsKEbzeh', -- From source
+    'JXhGpCTgUbAOrnNJ', -- From source
+    'JXhGpCTglxjGHdPY', -- From source
+    'JdcnERwuBNujEceM', -- From source
+    'JdcnERwuelNueUEz', -- From source
+    'JdcnERwutVIpnDpo', -- From source
+    'JdcnUPzAOmAYmDbm', -- From source
+    'JdcnUPzAZAEKKXAT', -- From source
+    'JdcnUPzAzboKNhrl', -- From source
+    'JdcnjKYRSzugpeCe', -- From source
+    'JdcnjKYRVtCqNWek', -- From source
+    'JdcnpCTgBNujAsDP', -- From source
+    'JeTOERwuSzugsTHb', -- From source
+    'JeTOERwuVtCqLSAN', -- From source
+    'JeTOUPzAMQlKVMMN', -- From source
+    'JeTOjKYRlxjGUHuF', -- From source
+    'JhYjERwuurLqVZMS', -- From source
+    'JhYjUPzAPMgvHDys', -- From source
+    'JhYjjKYRPMgvdWhG', -- From source
+    'JhYjpCTgAswhmFlt', -- From source
+    'JhYjpCTgJVSEZvYA', -- From source
+    'JjmMUPzAOmAYxdpW', -- From source
+    'JjmMUPzAeoKMxDdj', -- From source
+    'JjmMUPzAfXyqxCuM', -- From source
+    'JjmMUPzAryafxCuM', -- From source
+    'JjmMUPzAxDhwQtKx', -- From source
+    'JjmMjKYRDJGnzHwW', -- From source
+    'JjmMpCTgejVlPoAm', -- From source
+    'JpHajKYRejVljXKq', -- From source
+    'JsNcERwuMQFfrRFJ', -- From source
+    'JsNcERwuhuBzSDVc', -- From source
+    'JsNcERwumCcrFGFn', -- From source
+    'JsNcERwuuHNDmhho', -- From source
+    'JsNcUPzAbjUzaFmF', -- From source
+    'JyuqERwueQlCjWLx', -- From source
+    'JyuqERwuejVlAJVD', -- From source
+    'JyuqERwulNxQJnAF', -- From source
+    'JyuqjKYRMQFfWpDf', -- From source
+    'JyuqjKYRuHNDGYOt', -- From source
+    'KACjERwuyJLVevfg', -- From source
+    'KMoHUPzANbLvudqb', -- From source
+    'KSPBrfMIojSkdhLe', -- From source
+    'KchKERwuEWRzYhKg', -- From source
+    'KvFrERwulNxQzXSd', -- From source
+    'QjVbhHpKkmrbYiFt', -- From source
+    'UPJArfMIhNhpZpyG', -- From source
+    'VFKorfMIfUBNPrfZ', -- From source
+    'YhKgyetAbymjyetA', -- From source
+    'cgnsmJHLKETHAqii', -- From source
+    'fiUiJnzRnvorHwIA', -- From source
+    'jaiArfMIFPRvGhcr', -- From source
+    'mMAPpCTgDOxDeOzB', -- From source
+    'mlnxrfMIehSWnGGZ', -- From source
+    'oPeejKYRUPMeGnNF', -- From source
+    'pyhfUPzAPpVSmrQI', -- From source
+    'rhUkjKYRUlKknhgi', -- From source
+    'tJKKrfMIPDKqAMMt', -- From source
+    'wyfZVAcjwdmspOxD', -- From source
+    'zuZWOVpZhKIBLNbB'  -- From source
+)
+AND RETRIEVAL_REF_NO IN (
+    '512927332614', -- From source
+    '512921332621', -- From source
+    '512922332633', -- From source
+    '512921332763', -- From source
+    '512922332780', -- From source
+    '512923712561', -- From source
+    '512928332638', -- From source
+    '512928742544', -- From source
+    '512924332605', -- From source
+    '512929332790', -- From source
+    '512925105784', -- From source
+    '512929105784', -- From source
+    '512929105768', -- From source
+    '512925105770', -- From source
+    '512920332807', -- From source
+    '512922002247', -- From source
+    '512928090323', -- From source
+    '512976100009', -- From source
+    '512871009971', -- From source
+    '512921090320', -- From source
+    '512925105761', -- From source
+    '512921332740', -- From source
+    '512929332718', -- From source
+    '512929332639', -- From source
+    '512922105759', -- From source
+    '512926105759', -- From source
+    '512922332792', -- From source
+    '512928332644', -- From source
+    '512923332761', -- From source
+    '512921332673', -- From source
+    '512926332641', -- From source
+    '512927332599', -- From source
+    '512920332780', -- From source
+    '512928332780', -- From source
+    '512921332637', -- From source
+    '512924332637', -- From source
+    '512928332717', -- From source
+    '512928332658', -- From source
+    '512922332745', -- From source
+    '512928332632', -- From source
+    '512928332661', -- From source
+    '512925332673', -- From source
+    '512923332648', -- From source
+    '512923332784', -- From source
+    '512920332680', -- From source
+    '512928332711', -- From source
+    '512926332790', -- From source
+    '512922332720', -- From source
+    '512927105742', -- From source
+    '512922332686', -- From source
+    '512924332686', -- From source
+    '512928105754', -- From source
+    '512929332638', -- From source
+    '512923332613', -- From source
+    '512924105772', -- From source
+    '512923105779', -- From source
+    '512928105773', -- From source
+    '512927332794', -- From source
+    '512922105734', -- From source
+    '512924332731', -- From source
+    '512923332716', -- From source
+    '512927332739', -- From source
+    '512928332729', -- From source
+    '512924332559', -- From source
+    '512926105774', -- From source
+    '512923002245', -- From source
+    '512921332810', -- From source
+    '512928332788', -- From source
+    '512923105776', -- From source
+    '512920105763', -- From source
+    '512920105764', -- From source
+    '512920105772', -- From source
+    '512925332575', -- From source
+    '512927332434', -- From source
+    '512923105783', -- From source
+    '512926332727', -- From source
+    '512928105764', -- From source
+    '512928105779', -- From source
+    '512920100057', -- From source
+    '512922332688', -- From source
+    '512927332650', -- From source
+    '512928332651', -- From source
+    '512925332718', -- From source
+    '512929332737', -- From source
+    '512922332584', -- From source
+    '512929332730', -- From source
+    '512923332741', -- From source
+    '512927332590', -- From source
+    '512928332629', -- From source
+    '512922332672', -- From source
+    '512923332672', -- From source
+    '512920105762', -- From source
+    '512922332687', -- From source
+    '512926332687', -- From source
+    '512920332672', -- From source
+    '512923332619', -- From source
+    '512929332664', -- From source
+    '512922105779', -- From source
+    '512928332700', -- From source
+    '512925105780', -- From source
+    '512923332669', -- From source
+    '512921332782', -- From source
+    '512925100059', -- From source
+    '512922105780', -- From source
+    '512924332725', -- From source
+    '512929332679', -- From source
+    '512922332679', -- From source
+    '512928332658', -- From source
+    '512928332769', -- From source
+    '512920332614', -- From source
+    '512978128161', -- From source
+    '512921332776', -- From source
+    '512929332776', -- From source
+    '512927332658', -- From source
+    '512927332680', -- From source
+    '512921332660', -- From source
+    '512979980000', -- From source
+    '512923332780', -- From source
+    '512922332680', -- From source
+    '512924332680', -- From source
+    '512920100019', -- From source
+    '512927332631', -- From source
+    '512927100059', -- From source
+    '512973100005', -- From source
+    '512925332662', -- From source
+    '512922332638', -- From source
+    '512927332791', -- From source
+    '512922332659', -- From source
+    '512924332659', -- From source
+    '512928332768', -- From source
+    '512925332642', -- From source
+    '512923105785', -- From source
+    '512927332600', -- From source
+    '512925332618', -- From source
+    '512929332618', -- From source
+    '512925332628', -- From source
+    '512922332715', -- From source
+    '512928332614', -- From source
+    '512976100006', -- From source
+    '512920332725', -- From source
+    '512926332725', -- From source
+    '512928332725', -- From source
+    '512922332784', -- From source
+    '512926332653', -- From source
+    '512927332784', -- From source
+    '512928332666', -- From source
+    '512922332772', -- From source
+    '512925332659', -- From source
+    '512922332622', -- From source
+    '512929332615', -- From source
+    '512925332602', -- From source
+    '512928332671', -- From source
+    '512924332719', -- From source
+    '512922332664', -- From source
+    '512925100058', -- From source
+    '512924332801', -- From source
+    '512923332680', -- From source
+    '512924332674', -- From source
+    '512921100006', -- From source
+    '512927332784', -- From source
+    '512926332714', -- From source
+    '512921332790', -- From source
+    '512925332704', -- From source
+    '512921332607', -- From source
+    '512928332713', -- From source
+    '512922332693', -- From source
+    '512924332647', -- From source
+    '512920332714', -- From source
+    '512922332715', -- From source
+    '512922332697', -- From source
+    '512921332686', -- From source
+    '512927332715', -- From source
+    '512923332729', -- From source
+    '512921332674', -- From source
+    '512923332674', -- From source
+    '512926332674', -- From source
+    '512929332674', -- From source
+    '512921332711', -- From source
+    '512921332633', -- From source
+    '512921332784', -- From source
+    '512922332784', -- From source
+    '512926332723', -- From source
+    '512929332723', -- From source
+    '512925332666', -- From source
+    '512872489625', -- From source
+    '512874489627', -- From source
+    '512878489625', -- From source
+    '512870489427', -- From source
+    '512870489578', -- From source
+    '512878489417', -- From source
+    '512901270898', -- From source
+    '512870489421', -- From source
+    '512877489608', -- From source
+    '512874489422', -- From source
+    '512874489432', -- From source
+    '512807449059', -- From source
+    '512872489418', -- From source
+    '512874489418', -- From source
+    '512875489418', -- From source
+    '512877489417', -- From source
+    '512871489417', -- From source
+    '512871489418', -- From source
+    '512878489418', -- From source
+    '512879489418', -- From source
+    '512876489610', -- From source
+    '512870489571', -- From source
+    '512874489566', -- From source
+    '512876489569', -- From source
+    '512876489580', -- From source
+    '512879489567', -- From source
+    '512825001696', -- From source
+    '512823228803', -- From source
+    '512816889652', -- From source
+    '512873489423', -- From source
+    '512978001202'  -- From source
+);
+```
+
+To get the query for all 6157 records, you would need to:
+
+*   Access the full "IXFARE009.txt" file.
+*   Parse each relevant data line (likely lines 102 through 6258 based on the last line indicating a count of 6157 and the starting line numbers in the excerpts).
+*   Extract the **PAN** (end of the 4th space-separated field) and the **first 15 digits** of the number in the 5th field for each line.
+*   Compile the full list of unique PANs and unique 15-digit RETRIEVAL_REF_NOs.
+*   Populate the `IN` clauses in the SQL query structure provided above with these complete lists.
+
+Please also double-check the `TSTAMP_LOCAL LIKE '202504%'` filter to ensure it aligns with the dates you expect to find in the full file. The excerpts provided contain dates in May 2025.
+
+
