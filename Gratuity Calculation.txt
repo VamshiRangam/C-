@@ -1,0 +1,7 @@
+Gratuity Calculation : Last Drawn salary{S}
+                       Number of Years
+					   15 -> 15 Days salary for each year
+					   26  -> 26 working day month
+
+Gratuity Calculation : 150000 * 5 * 15 % 26
+
