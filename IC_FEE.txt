@@ -1,0 +1,11 @@
+Based on the provided source code excerpts, here's how timestamp information is handled:
+
+1.  **Writing Timestamp to the Record:** The code does include logic to process timestamp information and set it as a field in the record. Specifically, within the `reFormat` function, when processing a record of type "V22210", the code extracts the local transaction date and time from the source data. It then constructs a timestamp string in the format "%Y%m%d%H%M%S" and **sets this value for the column named "TSTAMP_LOCAL"**.
+
+2.  **Using Timestamp in the Write Process:** The `write` function also considers the "TSTAMP_LOCAL" value. One of the conditions checked before writing the record is whether the value for "TSTAMP_LOCAL" is empty. If it is empty, the write operation is skipped for that record. Furthermore, under specific conditions (if `m_strSRE` is not empty and `m_bEntityDetail` is true), a generic segment is populated, and the **"TSTAMP_LOCAL" value is set on this segment**.
+
+3.  **Matching Transactions Based on Timestamp:** The `setMatch` function defines the criteria used for matching. The criteria listed for matching are "PAN", "RETRIEVAL_REF_NO", "TRAN_DISPOSITION", "AMT_RECON_NET", and "F_AMT0". **"TSTAMP_LOCAL" is notably absent from this list**, meaning it is not used as one of the primary fields for matching transactions within this file's defined matching logic.
+
+4.  **Timestamp in Database Joins:** There is a `join` function provided which indicates that database joins involving this data might use a timestamp field called "TSTAMP_TRANS" along with "UNIQUENESS_KEY" when joining with the "FIN_RECORD" table. However, this pertains to how the data might be joined in a database *after* processing, rather than the primary transaction matching logic defined within the file processing itself by `setMatch`.
+
+In summary, the code **writes** timestamp data ("TSTAMP_LOCAL") to the record and considers it during the write process, but it **does not use "TSTAMP_LOCAL" as a primary criterion for matching transactions** according to the `setMatch` method. Database joins involving related data might use a different timestamp field.
