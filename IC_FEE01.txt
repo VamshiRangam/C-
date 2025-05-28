@@ -1,0 +1,47 @@
+why because the transactions which present in IXFARE records are matching in the table FIN_LYYYYMM  for fewer records
+
+Your observation is insightful and highlights a key detail in the reconciliation logic described in the sources.
+You are correct that the IXFARE file is intended for transactions identified as "extra". Based on our previous conversation and the sources, a record is written to IXFARE when the applyExtra function determines that it doesn't have a corresponding match in the database according to a specific set of rules.
+However, finding some of these IXFARE records manually in the FIN_Lyyyymm table doesn't necessarily contradict the process. This is because the "match" criteria used by the applyExtra function in the code is quite specific and involves more than just finding the record in FIN_Lyyyymm.
+Here's a breakdown based on the sources:
+1.
+The Role of applyExtra: The applyExtra function is the part of the InterchangeFile class (used by VisaSMSInterchangeFile) responsible for checking if an input record is "extra". It constructs a database query to look for existing records.
+2.
+The Query Targets Multiple Tables: The query built by applyExtra includes FIN_Lyyyymm, FIN_AMOUNTyyyymm, and potentially FIN_RECORD. It joins these tables.
+3.
+Matching Criteria in the Query: The query incorporates the specific matching criteria defined in the setMatch function, which for VisaSMSInterchangeFile includes "PAN", "RETRIEVAL_REF_NO", "TRAN_DISPOSITION", "AMT_RECON_NET", and "F_AMT0". It uses these fields to set predicates in the database query.
+4.
+The Critical Filter: Crucially, the applyExtra query also includes a predicate on the FIN_AMOUNTyyyymm table: FIN_AMOUNTyyyymm.TSTAMP_TRANS IS NULL. This means the query is specifically looking for records in FIN_Lyyyymm that match the input record's key fields AND do not yet have a corresponding entry in the FIN_AMOUNTyyyymm table.
+5.
+How "Extra" is Determined by the Query Result: The code considers the input record "extra" and writes it to the IXFARE file (post(m_hFile, 1)) if this specific query, including the FIN_AMOUNTyyyymm.TSTAMP_TRANS IS NULL condition, returns zero rows (bFound == false).
+Therefore, the reason you might find an IXFARE record manually in FIN_Lyyyymm is because:
+The record does exist in FIN_Lyyyymm, and it might even match on the key fields ("PAN", "RRN", etc.). However, if that existing record in FIN_Lyyyymm already has a corresponding entry in the FIN_AMOUNTyyyymm table, the applyExtra query's condition FIN_AMOUNTyyyymm.TSTAMP_TRANS IS NULL would cause that record to be excluded from the result set that applyExtra is looking for.
+Since the query specifically seeks records lacking a FIN_AMOUNTyyyymm entry, and it found none meeting that criteria (because the FIN_Lyyyymm record already had an associated FIN_AMOUNTyyyymm entry), bFound remains false, and the input record is consequently flagged as "extra" and written to the IXFARE file by this process.
+In summary, an input record goes to IXFARE if it doesn't find a match in the database according to the full set of criteria, which includes matching key fields and the absence of a related FIN_AMOUNTyyyymm entry in the existing database record. Finding the record manually in FIN_Lyyyymm indicates the first part of the criteria was met, but its presence in IXFARE suggests the second part (FIN_AMOUNTyyyymm.TSTAMP_TRANS IS NULL) was not met by any existing database record during this reconciliation step.
+
+
+
+
+
+
+
+
+
+Based on the provided sources and our conversation history, the process described for writing records to the IXFARE file indicates that these records are not inserted into the database by this specific reconciliation component's process at the time they are written to IXFARE.
+Here's why:
+•
+The IXFARE file is designated for records identified as "extra" by the reconciliation process.
+•
+A record is classified as "extra" when the applyExtra function attempts to find a matching record in the database based on the defined criteria ("PAN", "RETRIEVAL_REF_NO", "TRAN_DISPOSITION", "AMT_RECON_NET", and "F_AMT0" for VisaSMSInterchangeFile), and fails to find exactly one match.
+•
+When a record is classified as extra, the post function is called with the iExtra parameter set to 1.
+•
+Inside the post function, there is a conditional check for calling the applyFees function: if (bSuccess && !iExtra) bSuccess = applyFees(hReconciliationSegment);.
+•
+The applyFees function is responsible for interacting with the database, specifically targeting a table named FIN_AMOUNTyyyymm and using a MergeStatement to potentially insert or update records.
+•
+Because the condition !iExtra is false when iExtra is 1 (for IXFARE records), the call to applyFees is skipped for records being written to the IXFARE file by this process.
+Therefore, the code explicitly prevents records being written to the IXFARE file from being inserted or merged into the FIN_AMOUNTyyyymm table (or other tables handled by applyFees) within this reconciliation run.
+The database tables like FIN_Lyyyymm, FIN_AMOUNTyyyymm, and FIN_RECORD are queried during the applyExtra function to determine if a match exists, which is how the decision to write to IXFARE is made. However, the act of writing to IXFARE does not trigger a database insertion for that record within this component.
+As we discussed previously, if you find these IXFARE records in the database, it suggests they were already present in the database from another source or process before this particular reconciliation run occurred, and this run simply flagged them as "extra" because they didn't perfectly match the input records according to the specified reconciliation rules.
+The sources provided (CXOSRF82.txt and CXOSRFZ5.txt) do not mention any process where data from the IXFARE file is subsequently loaded or inserted into an AU_TRAN table or any other database table.
