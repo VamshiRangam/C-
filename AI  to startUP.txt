@@ -1,0 +1,12 @@
+AI get to know:
+
+generative AI
+transformers
+large language models
+vector embeddings
+vector databases
+langchain
+rag- retrieval augmented generation
+agentic AI
+mcp - model context protocol
+A2A - agent to agent communication
