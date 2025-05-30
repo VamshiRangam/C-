@@ -1,0 +1,8 @@
+The interchange Fee (IC) files received by Ethos are missing data. The issue came to light when reprocessed IC files were received were found to have more data that original files.
+Ponkabilan noted two possibilities for the difference in row count.
+
+#1 Possiblity:
+The number of exception records may be reduced since we are reprocessing the files. Typically, transactions go into exceptions when the transaction match fails in DN during reconciliation against the network's raw data file. This depends on the network file arrival time and the transactions entered into DN by that time. Considering these factors, and since you mentioned that you can see all the previous records, I suspect that the exception records have now been included.
+#2 Possiblity:
+For some reasons, the application might have stopped (specific to the IXE file) and restarted later during the previous file processing. This could have led to missing data of the same Pan_prefix type.
+
