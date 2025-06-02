@@ -1,0 +1,10 @@
+My Further  Analysis:
+Scenario 1: (Goes to VNTIXE): Record comes in -> `applyExtra` checks `FIN_AMOUNT` Finds the record, and TSTAMP_TRANS is empty (IS NULL) -> bFound is true. -> Record sent to VNTIXE -> applyFees is called -> This run writes its timestamp to TSTAMP_TRANS in FIN_AMOUNT.
+ 
+Scenario 2 : (Goes to IXFARE): Record comes in -> applyExtra checks FIN_AMOUNT Finds the record, but TSTAMP_TRANS already has a timestamp (IS NOT NULL) from a prior event. The TSTAMP_TRANS IS NULL condition is not met -> bFoun is false -> Record sent to IXFARE. -> applyFees is skipped -> This run does not write or update the TSTAMP_TRANS in FIN_AMOUNT. The timestamp that was already there remain
+ 
+Therefore, the difference in row counts in the VNTIXE file between different runs of the process handling the same input data is expected  if some of the records were already processed by a previous run or system that populated the TSTAMP_TRANS field in FIN_AMOUNT The code is designed to not re-process fees for records that it considers already timestamped in FIN_AMOUNT. These already timestamped records are diverted to IXFARE instead of VNTIXE, leading to a lower count in the VNTIXE output compared to the total number of incoming records that might otherwise qualify.
+ 
+the count difference is a function of the data's state (specifically, the TSTAMP_TRANS field in FIN_AMOUNT) and the code's intentional design to handle records that have already been timestamped differently (by sending them to IXFARE and skipping applyFees).
+ 
+Most like possibility is that raw input data processed for the file data was different between two processing runs, causing a different number of records to pass necessary filtering and included in VNTIXE FIle .                                                                                                                                                                Thinking they need to compare the Raw Data files for 2025-01-30.gz.pgp {Which processed  on 2025-01-30 and 2025-03-15} to point which records were present or differed Between two runs
