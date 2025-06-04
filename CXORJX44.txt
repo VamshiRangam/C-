@@ -1,0 +1,24 @@
+&dot./ ADD NAME=RJRLCSE
+&root
+<root>
++details
+<tab>
+<name>RelatedCase</name>
+<column>CaseNumber</column>
+<column>CaseTypeIndicator</column>
+<column>StateDescription</column>
+<column>TransactionAmount</column>
+<column>AdjustmentAmount</column>
++row
+</tab>
+</root>
+&details
+<details>
+&row
+<row>
+<value>~R.CaseNumber.</value>
+<value>~R.CaseTypeIndicator.</value>
+<value>~R.StateDescription.</value>
+<value>~R.TransactionAmount.</value>
+<value>~R.AdjustmentAmount.</value>
+</row>

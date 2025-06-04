@@ -1,0 +1,349 @@
+openapi: 3.0.0
+info:
+  title: "DataNavigator.Resolve.RelatedCases"
+  description: |
+    Returns list of cases related to a transaction or a case.
+    The result set contains:
+      | column            | value                    |
+      | ----------------- | ------------------------ |
+      | CaseNumber        | Case number              |
+      | CaseTypeIndicator | Case type indicator      |
+      | StateDescription  | Case state description   |
+      | TransactionAmount | Value amount transaction |
+      | AdjustmentAmount  | Value amount adjustment  |
+  contact:
+    email: alan.ammentorp@fisglobal.com
+  license:
+    name: Apache 2.0
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+  version: 1.0.0
+servers:
+  - description: WireMock
+    url: https://fis-datanavigator.wiremockapi.cloud
+  - description: SwaggerHub API Auto Mocking
+    url: https://app.swaggerhub.com/apisFIS_APIs/DataNavigator.Resolve.RelatedCases/1.0.0
+security:
+  - apiKey: []
+tags:
+  - name: developers
+    description: Operations available to regular developers
+paths:
+  /rest/datanavigator/resolve/relatedcases/v1.0.0:
+    post:
+      tags:
+        - developers
+      summary: Returns list of cases related to a transaction or a case.
+      description: |
+        Returns list of cases related to a transaction or a case.
+        The result set contains:
+          | column            | value                    |
+          | ----------------- | ------------------------ |
+          | CaseNumber        | Case number              |
+          | CaseTypeIndicator | Case type indicator      |
+          | StateDescription  | Case state description   |
+          | TransactionAmount | Value amount transaction |
+          | AdjustmentAmount  | Value amount adjustment  |
+      operationId: ""
+      security: [apiKey: []]
+      parameters:
+        - in: header
+          name: uuid
+          description: UUID.
+          required: true
+          schema:
+            type: string
+            minLength: 36
+            maxLength: 36
+            pattern: "[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}"
+          example: "c8d892a6-1982-4152-aab7-c4a05bfdec5e"
+        - in: header
+          name: index
+          description: Starting index (default 1) in the result set.
+          required: false
+          schema:
+            type: integer
+          example: 1
+        - in: header
+          name: count
+          description: Maximum number (default 1000) of rows to return.
+          required: false
+          schema:
+            type: integer
+          example: 1000
+      responses:
+        "200":
+          $ref: "#/components/responses/200"
+        "400":
+          $ref: "#/components/responses/400"
+        "401":
+          $ref: "#/components/responses/401"
+        "500":
+          $ref: "#/components/responses/500"
+        "503":
+          $ref: "#/components/responses/503"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Request"
+            examples:
+              example1:
+                value:
+                  {
+                    "info":
+                      {
+                        "customer": "GOLD"
+                      },
+                    "primaryKey": "2025031511291342"
+                  }
+              example2:
+                value:
+                  {
+                    "info":
+                      {
+                        "customer": "GOLD"
+                      },
+                    "caseNumber": "2025042000000678"
+                  }
+components:
+  securitySchemes:
+    apiKey:
+      name: session
+      description: The session value from /rest/datanavigator/secure/authenticate/v1.0.0.
+      type: apiKey
+      in: header
+  schemas:
+    Info:
+      type: object
+      required:
+        - customer
+      properties:
+        customer:
+          description: DataNavigator instance.
+          type: string
+          example: GOLD
+    Column:
+      type: string
+      example: [CaseNumber, CaseTypeIndicator, StateDescription, TransactionAmount, AdjustmentAmount]
+    Request:
+      type: object
+      required:
+        - info
+      properties:
+        info:
+          $ref: "#/components/schemas/Info"
+        primaryKey:
+          description: Financial transaction key. 
+          type: string
+          example: 2025031511291342
+        caseNumber:
+          description: EMS case number.
+          type: string
+          example: 2025042000000678
+    Row:
+      type: object
+      properties:
+        value:
+          description: Array of strings for each tag name in the column array.
+          type: array
+          items:
+            type: string
+            example:
+              [
+                [
+                  "2025020400000012",
+                  "F",
+                  "Fraud Analysis",
+                  "$1200.00",
+                  "$1200.00"
+                ],
+              ]
+    Details:
+      type: object
+      properties:
+        code:
+          description: |
+            API response code:
+              | code   | message                         |
+              | -------| --------------------------------|
+              | DN-000 | Success                         |
+              | DN-001 | Success (maximum rows returned) |
+              | DN-002 | No data found                   |
+              | DN-003 | Invalid request                 |
+              | DN-004 | Authentication unsuccessful     |
+              | DN-005 | Query failure                   |
+              | DN-006 | Invalid time range              |
+              | DN-400 | Bad request                     |
+              | DN-401 | Unauthorized                    |
+              | DN-500 | Internal server error           |
+              | DN-503 | Service unavailable             |
+          type: string
+          enum: [DN-000, DN-001, DN-002, DN-003, DN-004, DN-005, DN-006, DN-400, DN-401, DN-500, DN-503]
+          example: "DN-000"
+        message:
+          description: API response text.
+          type: string
+          example: Success
+    ResponseTab:
+      type: object
+      properties:
+        name:
+          description: Name of tab.
+          type: string
+          example: Case
+        column:
+          description: Array of tag names.
+          type: array
+          items:
+            $ref: "#/components/schemas/Column"
+        row:
+          description: Array of value arrays.
+          type: array
+          items:
+            $ref: "#/components/schemas/Row"
+    Response:
+      type: object
+      properties:
+        details:
+          $ref: "#/components/schemas/Details"
+        tab:
+          description: Object containing name, column and row.
+          type: array
+          items:
+            $ref: "#/components/schemas/ResponseTab"
+    Error:
+      type: object
+      properties:
+        details:
+          $ref: "#/components/schemas/Details"
+  headers:
+    Content-Type:
+      description: Content type.
+      required: true
+      schema:
+        type: string
+      example: "application/json"
+    Content-Length:
+      description: Content length.
+      required: true
+      schema:
+        type: integer
+      example: 123
+    count:
+      description: Maximum number of rows to return.
+      required: false
+      schema:
+        type: integer
+      example: 100
+    index:
+      description: |
+        Request - Index of first row to return.  
+        Response - Index of first row on next page.  
+      required: false
+      schema:
+        type: integer
+      example: 2
+    totalRecords:
+      description: Total number of rows available.
+      required: false
+      schema:
+        type: integer
+      example: 2
+    session:
+      description: Basic Auth session key.
+      required: false
+      schema:
+        type: string
+      example: "V0FMVEVSRSA6MDczNTM2MzEzMzEwNDI5OA=="
+    uuid:
+      description: UUID.
+      required: true
+      schema:
+        type: string
+      example: "c8d892a6-1982-4152-aab7-c4a05bfdec5e"
+  responses:
+    "200":
+      description: OK.
+      headers:
+        session:
+          $ref: "#/components/headers/session"
+        uuid:
+          $ref: "#/components/headers/uuid"
+        index:
+          $ref: "#/components/headers/index"
+        totalRecords:
+          $ref: "#/components/headers/totalRecords"
+        Content-Length:
+          $ref: "#/components/headers/Content-Length"
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Response"
+    "400":
+      description: Bad request.
+      headers:
+        uuid:
+          $ref: "#/components/headers/uuid"
+        Content-Length:
+          $ref: "#/components/headers/Content-Length"
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            {
+              type: "urn:fisglobal:api:error:server-validation",
+              title: "Server-side validation failed",
+              details:
+                {
+                  code: "DN-400",
+                  message: "Bad request (missing request header uuid)",
+                  field: "uuid",
+                },
+            }
+    "401":
+      description: Unauthorized.
+      headers:
+        uuid:
+          $ref: "#/components/headers/uuid"
+        Content-Length:
+          $ref: "#/components/headers/Content-Length"
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example: '{ details: { code: "DN-401", message: "Unauthorized" } }'
+    "500":
+      description: Internal server error.
+      headers:
+        uuid:
+          $ref: "#/components/headers/uuid"
+        Content-Length:
+          $ref: "#/components/headers/Content-Length"
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example: '{ details: { code: "DN-500", message: "Server error" } }'
+    "503":
+      description: Service unavailable.
+      headers:
+        uuid:
+          $ref: "#/components/headers/uuid"
+        Content-Length:
+          $ref: "#/components/headers/Content-Length"
+        Content-Type:
+          $ref: "#/components/headers/Content-Type"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example: '{ details: { code: "DN-503", message: "Service unavailable" } }'
