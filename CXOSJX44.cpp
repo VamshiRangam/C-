@@ -42,9 +42,9 @@
 #ifndef CXOSBS12_h
 #include "CXODBS12.hpp"
 #endif
-#ifndef CXOSES62_h
-#include "CXODES62.hpp"
-#endif
+//#ifndef CXOSES62_h
+//#include "CXODES62.hpp"
+//#endif
 #ifndef CXOSJX44_h
 #include "CXODJX44.hpp"
 #endif
@@ -52,10 +52,10 @@
 
 //## begin module%67BEEF610034.declarations preserve=no
 //## end module%67BEEF610034.declarations
+
+//## begin module%67BEEF610034.additionalDeclarations preserve=yes
 #include "CXODES01.hpp"
 #include "CXODRL04.hpp"
-//## begin module%67BEEF610034.additionalDeclarations preserve=yes
-
 //## end module%67BEEF610034.additionalDeclarations
 
 
@@ -116,10 +116,11 @@ bool RelatedCaseCommand::execute ()
       m_pXMLDocument = new XMLDocument("SOURCE", "CXORJX44", &m_hRow, &m_hXMLText);
 #endif
    m_pXMLDocument->reset();
-   m_pXMLItem->reset();
-   m_pXMLDocument->setMaximumSize(64000);
+   m_pXMLItem->reset(); 
+   m_pXMLDocument->setMaximumSize(1000000);
    m_pXMLDocument->setSuppressEmptyTags(false);
    m_hQuery.reset();
+   hQuery.reset();
    int i = parse();
    if (i != 0)
    {
@@ -147,13 +148,15 @@ bool RelatedCaseCommand::execute ()
          {
             m_pXMLDocument->revert();
             SOAPSegment::instance()->setRtnCde(b ? '2' : '5');
-					m_pXMLDocument->add("details");
-					return reply();
+            m_pXMLDocument->add("details");
+            return reply();
          }
       }
       m_hQuery.reset();
       m_iQuery = 2;
       m_hRelatedCaseSegment.bind(m_hQuery);
+      //RelatedCaseSegment::getCUR_TRAN();
+      //RelatedCaseSegment::instance()->bind(m_hQuery);
       m_hQuery.bind("EMS_CASE", "NET_RULES", Column::STRING, &m_strNET_RULES);
       if (!m_pXMLItem->get("primaryKey").empty())
          m_hQuery.setBasicPredicate("EMS_CASE", "TSTAMP_TRANS", "=", m_pXMLItem->get("primaryKey").c_str());
@@ -174,12 +177,13 @@ bool RelatedCaseCommand::execute ()
             m_hQuery.setBasicPredicate("EMS_CASE", "CASE_NO", "<>", m_pXMLItem->get("caseNumber").c_str());
          }
       }
-      bool b = pSelectStatement->execute(hQuery);
+      m_hQuery.attach(this);
+      bool b = pSelectStatement->execute(m_hQuery);
       if (b == false
          || pSelectStatement->getRows() == 0)
       {
          m_pXMLDocument->revert();
-         SOAPSegment::instance()->setRtnCde('5');
+         SOAPSegment::instance()->setRtnCde('2');
       }
    }
    else
@@ -209,6 +213,13 @@ void RelatedCaseCommand::update (Subject* pSubject)
       m_hGenericSegment.set("StateDescription", m_hRelatedCaseSegment.getStateDescription());
       m_hGenericSegment.set("TransactionAmount", m_hRelatedCaseSegment.getAMT_TRAN());
       m_hGenericSegment.set("AdjustmentAmount", m_hRelatedCaseSegment.getAMT_ADJUSTMENT());
+      m_hRelatedCaseSegment.setStateDescription(m_strStateDescription);
+      //m_hGenericSegment.set("CaseNumber", "20250604000001");
+      //m_hGenericSegment.set("CaseTypeIndicator", "X");
+      //m_hGenericSegment.set("StateDescription", "CRS");
+      //m_hGenericSegment.set("TransactionAmount", "2500");
+      //m_hGenericSegment.set("AdjustmentAmount", "1000");
+
       m_pXMLDocument->add("row");
       UseCase::addItem();
       return;
