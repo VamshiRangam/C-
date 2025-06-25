@@ -1,0 +1,42 @@
+{
+   "details":    {
+      "code": "DN-000",
+      "message": "Success"
+   },
+   "tab": [   {
+      "name": "Connection",
+      "column":       [
+         "Customer",
+         "Server",
+         "Port"
+      ],
+      "row": [{"value":       [
+         "GTWY",
+         "BLR1-LT7VWYY33",
+         "30000"
+      ]}]
+   }]
+}
+
+{
+   "details":    {
+      "code": "DN-002",
+      "message": "No data found"
+   },
+   "tab": [   {
+      "name": "RelatedCase",
+      "column":       [
+         "CaseNumber",
+         "CaseTypeIndicator",
+         "StateDescription",
+         "TransactionAmount",
+         "AdjustmentAmount"
+      ]
+   }]
+}
+
+
+{"details": {
+   "code": "DN-002",
+   "message": "No data found"
+}}
