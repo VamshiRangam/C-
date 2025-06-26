@@ -1,0 +1,16 @@
+                    {
+   "details":    {
+      "code": "DN-002",
+      "message": "No data found"
+   },
+   "tab": [   {
+      "name": "RelatedCase",
+      "column":       [
+         "CaseNumber",
+         "CaseTypeIndicator",
+         "StateDescription",
+         "TransactionAmount",
+         "AdjustmentAmount"
+      ]
+   }]
+}
