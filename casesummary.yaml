@@ -1,0 +1,99 @@
+openapi: 3.0.0
+info:
+  title: "DataNavigator.Resolve.CaseSummary"
+  description: |
+    Returns summary of cases for an institution.
+    The result set contains:
+      | column      | value                      |
+      | ----------- | -------------------------- |
+      | Institution | Institution ID             |
+      | Role        | Acquirer (A) or issuer (I) |
+      | Network     | Network ID                 |
+      | Open        | Number of open cases       |
+      | Closed      | Number of closed cases     |
+      | Rejected    | Number of rejected cases   |
+# contact
+  version: 1.0.0
+# servers
+    url: https://virtserver.swaggerhub.com/FIS_APIs/DataNavigator.Resolve.CaseSummary/1.0.0
+security:
+  - apiKey: []
+# tags
+paths:
+  /rest/datanavigator/resolve/casesummary/v1.0.0:
+    post:
+      tags:
+        - developers
+      summary: Returns summary of cases for an institution.
+      description: |
+        Returns summary of cases for an institution.
+        The result set contains:
+          | column      | value                      |
+          | ----------- | -------------------------- |
+          | Institution | Institution ID             |
+          | Role        | Acquirer (A) or issuer (I) |
+          | Network     | Network ID                 |
+          | Open        | Number of open cases       |
+          | Closed      | Number of closed cases     |
+          | Rejected    | Number of rejected cases   |
+      operationId: ""
+      security: [apiKey: []]
+# parameters
+# responses_ref
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Request"
+            examples:
+              example1:
+                value:
+                  {
+                    "info":
+                      {
+                        "customer": "GOLD"
+                      },
+                    "institution": "000000942"
+                  }
+components:
+# securitySchemes
+  schemas:
+# Info
+    Column:
+      type: string
+      example: [ Institution, Role, Network, Open, Closed, Rejected ]
+    Request:
+      type: object
+      required:
+        - info
+        - institution
+      properties:
+        info:
+          $ref: "#/components/schemas/Info"
+        institution:
+          description: Institution ID.
+          type: string
+          example: 000000942
+    Row:
+      type: object
+      properties:
+        value:
+          description: Array of strings for each tag name in the column array.
+          type: array
+          items:
+            type: string
+            example:
+              [
+                [
+                  "000000942", "A", "MCI", "9", "34", "0"
+                ],
+                [
+                  "000000942", "I", "MCI", "18", "71", "6"
+                ],
+              ]
+# Details
+#~~1 Summary
+# Response
+# Error
+# headers
+# responses
