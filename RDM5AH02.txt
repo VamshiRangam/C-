@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>                                      
+<ResponsePackage id="0"  name="RDM5AH02"  seq="0"  batchID="162910900"  >   
+<Environment>Production</Environment>                                       
+<Member>                                                                    
+<Name>INT653</Name>                                                         
+</Member>                                                                   
+<Timestamp>2025071019100034</Timestamp>                            
+<BQIDownloadResponse>                                                       
+<CaseManifest memberRole="I">
+<Case>
+<User Id="DNSERVER"></User>
+<NetworkID>0002</NetworkID>
+<AccountNumberPrefix>528749</AccountNumberPrefix>
+<AccountNumberSuffix>0000</AccountNumberSuffix>
+<SystemTraceAuditNumber>187444</SystemTraceAuditNumber>
+<ARN>18744409060010000905MDA</ARN>
+<RetrievalReferenceNumber>425072187444</RetrievalReferenceNumber>
+<TransactionDate>2025-07-10</TransactionDate>
+<LocalDateTime>20250710191000</LocalDateTime>
+<TransactionAmount currency="840">5.00</TransactionAmount>
+<CardholderAction>C</CardholderAction>
+</Case>
+<FraudReport>
+<FraudType>04</FraudType>
+<AccountDeviceType>A</AccountDeviceType>
+</FraudReport>
+</CaseManifest>
+</BQIDownloadResponse>                                               
+</ResponsePackage>                                                   
