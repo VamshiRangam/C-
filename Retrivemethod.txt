@@ -1,0 +1,39 @@
+if (CaseNationalNetworkSegment::instance()->getACQ_REF_NO().length() > 0) // [3]
+    {
+        string strTABLE_NAME(strLocator, 0, 11);
+        string strDATA_TYPE;
+        Query hQuery_with_ARN_Predicate(hQuery4); // Create a temporary query based on hQuery4
+
+        if (reusable::DataModel::instance()->isPresent(strTABLE_NAME, "ACQ_REF_NO", strDATA_TYPE)) // [4]
+        {
+            // Set the ACQ_REF_NO predicate on the temporary query
+            hQuery_with_ARN_Predicate.setBasicPredicate(strLocator.c_str(), "ACQ_REF_NO", "=", CaseNationalNetworkSegment::instance()->getACQ_REF_NO().c_str());
+
+#ifdef MVS
+            if (hQueryAide.execute(hQuery_with_ARN_Predicate, pSelectStatement.get(), &hRow) == false)
+                break; // Exit loop if query execution fails
+#else
+            if (!pSelectStatement->execute(hQuery_with_ARN_Predicate))
+                break; // Exit loop if query execution fails
+#endif
+
+            if (pSelectStatement->getRows() > 0) // [5]
+            {
+                // ** CRITICAL FIX: If rows are found by ACQ_REF_NO, the transaction is located. **
+                // Populate segments from the result of pSelectStatement
+                CaseSegment::instance()->setFinancialData(); // This populates CaseSegment from the current pSelectStatement results [Our Conversation]
+                Trace::put("Found a financial transaction using ACQ_REF_NO."); // Add informative trace [Our Conversation]
+                return true; // Immediately return true as the transaction is found. [Our Conversation]
+
+                // ** REMOVED THIS PROBLEMATIC LINE: **
+                // hQuery4.setBasicPredicate(strLocator.c_str(), "ACQ_REF_NO", "=", FinancialBaseSegment::instance()->getACQ_REF_NO().c_str());
+                // This line was problematic because FinancialBaseSegment::instance()->getACQ_REF_NO() would likely be empty or outdated at this point.
+                // Also, if the transaction is found, we should return, making this line unreachable/unnecessary.
+
+                // The original hQuery_with_ARN_Predicate.reset(); here is removed as we are returning,
+                // and the local Query object will be destructed automatically.
+            }
+            // If pSelectStatement->getRows() == 0, the function continues to try other search methods.
+            hQuery_with_ARN_Predicate.reset(); // Reset if no rows found or if 'isPresent' was false
+        }
+    }
