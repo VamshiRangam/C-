@@ -240,6 +240,7 @@ bool Transaction::retrieveTransaction (const string& strUserRole, bool bIncludeR
    string strValue;
    double dAMT_RECON_NET = 0;
    bool bReturn = true;
+   bool bIncludeTranDateTime = false;
    if (CaseSegment::instance()->getTSTAMP_TRANS().length() == 16)
    {
       if (bReturn)
@@ -372,11 +373,11 @@ bool Transaction::retrieveTransaction (const string& strUserRole, bool bIncludeR
          FinancialPaymentSegment::instance()->bind(hQuery);
          IntegratedCircuitCardSegment::instance()->bind(hQuery);
          string strTemp;
-         if ((CaseManifestSegment::instance()->getFile() == "DNRDM5" 
-         || CaseManifestSegment::instance()->getFile() == "EMSSHT" 
+         if ((CaseManifestSegment::instance()->getFile() == "DNRDM5"
+         || CaseManifestSegment::instance()->getFile() == "EMSSHT"
          || CaseManifestSegment::instance() ->getFile() == "DNBXML"
          || CaseManifestSegment::instance()->getFile() == "EFTPOS")
-         && (CaseSegment::instance()->getPAN_PREFIX().length() 
+         && (CaseSegment::instance()->getPAN_PREFIX().length()
          && CaseSegment::instance()->getPAN_SUFFIX().length()))
          {
             if (CaseManifest::instance()->get("AccountNumberPrefixExtn", strTemp))
@@ -396,10 +397,19 @@ bool Transaction::retrieveTransaction (const string& strUserRole, bool bIncludeR
             hQuery.setBasicPredicate(strLocator.c_str(), "PAN_SUFFIX", "=", CaseSegment::instance()->getPAN_SUFFIX().c_str());
          }
          else if (CaseSegment::instance()->getPAN().length())
+         {
+            if (hQuery.getSearchCondition().length() > 0)
+               hQuery.getSearchCondition().append(" AND ");
+            hQuery.getSearchCondition().append("(");
             hQuery.setBasicPredicate(strLocator.c_str(), "PAN", "=", CaseSegment::instance()->getPAN().c_str());
-         if (CaseManifest::instance()->get("Token", strTemp) && strTemp.empty() == false )
+         }
+         if (CaseManifest::instance()->get("Token", strTemp) && strTemp.empty() == false)
          {
             hQuery.setBasicPredicate(strLocator.c_str(), "PAN", "=", strTemp.c_str(), false, false);
+         }
+         if (CaseSegment::instance()->getPAN().length())
+         {
+            hQuery.getSearchCondition().append(")");
          }
          if (CaseManifestSegment::instance()->getFile() == "ISIARC")
          {
@@ -414,7 +424,6 @@ bool Transaction::retrieveTransaction (const string& strUserRole, bool bIncludeR
          hQuery.setBasicPredicate(strLocator.c_str(), "FUNC_CODE", "<>", "208");
          if (!IF::Extract::instance()->getRecord("DSPEC   GE10    MULTICHB~Y", strValue))
             hQuery.setBasicPredicate(strLocator.c_str(), "FIN_TYPE", "NOT LIKE", "__1");
-         hQuery.setBasicPredicate(strLocator.c_str(), "TSTAMP_LOCAL", "BETWEEN", strDateTime.c_str());
          if (strUserRole == "A"
             || (CaseManifestSegment::instance()->getFile() == "ISIARC"
                && bIncludeAmount == false))
@@ -440,7 +449,8 @@ bool Transaction::retrieveTransaction (const string& strUserRole, bool bIncludeR
                hQuery.getSearchCondition().append(" AND ");
                hQuery.getSearchCondition().append("(");
                hQuery.setBasicPredicate(strLocator.c_str(),"RETRIEVAL_REF_NO","=",CaseSegment::instance()->getRETRIEVAL_REF_NO().c_str());
-               if (strLocator.substr(5, 6) >= DataModel::instance()->getFirstMonth("FIN_RECORD", "VISA_TRANSACTION_ID"))
+               if (strLocator.substr(5, 6) >= DataModel::instance()->getFirstMonth("FIN_RECORD", "VISA_TRANSACTION_ID")
+                  && CaseVisaSegment::instance()->getTRAN_IDENTIFIER().empty() == false)
                   hQuery.setBasicPredicate("FIN_RECORD R", "VISA_TRANSACTION_ID", "=", CaseVisaSegment::instance()->getTRAN_IDENTIFIER().c_str(), false, false);
                hQuery.getSearchCondition().append(")");
             }
@@ -467,7 +477,15 @@ bool Transaction::retrieveTransaction (const string& strUserRole, bool bIncludeR
             && strValue != "USPS")
             SOAPCommand::secure(hQuery, strLocator.c_str());
          if (strUserRole == "A" && IF::Extract::instance()->getCustomCode() == "CBA")
-            hQuery.setBasicPredicate(strLocator.c_str(), "TRAN_TYPE_ID", "NOT LIKE", "20%");
+         {
+            if (CaseManifest::instance()->get("ProcessingCode", strTemp) && !strTemp.empty())
+            {
+               strTemp.append("%");
+               hQuery.setBasicPredicate(strLocator.c_str(), "TRAN_TYPE_ID", "LIKE", strTemp.c_str());
+            }
+            else
+               hQuery.setBasicPredicate(strLocator.c_str(), "TRAN_TYPE_ID", "NOT LIKE", "20%");
+         }
          Query hQuery1(2);
          if (CaseManifestSegment::instance()->getFile() == "ISIARC")
          {
@@ -483,13 +501,62 @@ bool Transaction::retrieveTransaction (const string& strUserRole, bool bIncludeR
             if ((bIncludeSysTraceAuditNo) && (CaseManifestSegment::instance()->getFile() != "VRRDM5"))
                hQuery.setBasicPredicate(strLocator.c_str(),"SYS_TRACE_AUDIT_NO","=",CaseSegment::instance()->getSYS_TRACE_AUDIT_NO().c_str());
          }
+         Query hQuery4(2);
+         if (CaseSegment::instance()->getTSTAMP_LOCAL().length() >= 14 && 
+            memcmp(CaseSegment::instance()->getTSTAMP_LOCAL().data() + 8,"000000", 6) != 0)
+         {
+            hQuery4 = hQuery;
+            bIncludeTranDateTime = true;
+            hQuery4.setBasicPredicate(strLocator.c_str(), "TSTAMP_LOCAL", "=", CaseSegment::instance()->getTSTAMP_LOCAL().c_str());
+         }
+         hQuery.setBasicPredicate(strLocator.c_str(), "TSTAMP_LOCAL", "BETWEEN", strDateTime.c_str());
+         hQuery1.setBasicPredicate(strLocator.c_str(), "TSTAMP_LOCAL", "BETWEEN", strDateTime.c_str());
+         hQuery2.setBasicPredicate(strLocator.c_str(), "TSTAMP_LOCAL", "BETWEEN", strDateTime.c_str());
+         hQuery3.setBasicPredicate(strLocator.c_str(), "TSTAMP_LOCAL", "BETWEEN", strDateTime.c_str());
+
+         if (CaseNationalNetworkSegment::instance()->getACQ_REF_NO().length() > 0)
+         {
+            string strTABLE_NAME(strLocator, 0, 11);
+            string strDATA_TYPE;
+            Query hQuery_with_ARN_Predicate(hQuery4);
+            if (reusable::DataModel::instance()->isPresent(strTABLE_NAME, "ACQ_REF_NO", strDATA_TYPE))
+            {
+               hQuery_with_ARN_Predicate.setBasicPredicate(strLocator.c_str(), "ACQ_REF_NO", "=", CaseNationalNetworkSegment::instance()->getACQ_REF_NO().c_str());
 #ifdef MVS
-         if (hQueryAide.execute(hQuery, pSelectStatement.get(), &hRow) == false)
-            break;
+               if (hQueryAide.execute(hQuery_with_ARN_Predicate, pSelectStatement.get(), &hRow) == false)
+                  break;
 #else
-         if (!pSelectStatement->execute(hQuery))
-            break;
+               if (!pSelectStatement->execute(hQuery_with_ARN_Predicate))
+                  break;
 #endif
+            }
+            if (pSelectStatement->getRows() > 0)
+            {
+               hQuery4.setBasicPredicate(strLocator.c_str(), "ACQ_REF_NO", "=", FinancialBaseSegment::instance()->getACQ_REF_NO().c_str());
+               hQuery_with_ARN_Predicate.reset();
+            }
+         }
+
+         if (bIncludeTranDateTime)
+         {
+#ifdef MVS
+            if (hQueryAide.execute(hQuery4, pSelectStatement.get(), &hRow) == false)
+               break;
+#else
+            if (!pSelectStatement->execute(hQuery4))
+               break;
+#endif
+         }
+         if (pSelectStatement->getRows() == 0)
+         {
+#ifdef MVS
+            if (hQueryAide.execute(hQuery, pSelectStatement.get(), &hRow) == false)
+               break;
+#else
+            if (!pSelectStatement->execute(hQuery))
+               break;
+#endif    
+         }
          if (pSelectStatement->getRows() == 0 
             && (bIncludeSysTraceAuditNo || CaseManifestSegment::instance()->getFile() == "ISIARC"))
          {
@@ -537,7 +604,7 @@ bool Transaction::retrieveTransaction (const string& strUserRole, bool bIncludeR
                break;
 #endif
          }
-         if (hQuery.getAbort() || hQuery1.getAbort() || hQuery2.getAbort() || hQuery3.getAbort())
+         if (hQuery.getAbort() || hQuery1.getAbort() || hQuery2.getAbort() || hQuery3.getAbort() || hQuery4.getAbort())
          {
             if (!IF::Extract::instance()->getRecord("DSPEC   GE10    MULTICHB~Y", strValue)
                && strFIN_TYPE.length() > 2 && strFIN_TYPE[2] > '0')
