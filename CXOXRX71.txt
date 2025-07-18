@@ -1,0 +1,218 @@
+&dot./ ADD NAME=DNDNRX71
+** TCR90 File Header
+FH 90~CC   ~JD                  TEST                             SECURITY      +
+000                                                                            +
+           
+SY ~CC ~Z.PBIN %-6.6s
+SY ~JD ~B.JDATE %-5.5s
+** TCR0 Batch Header
+R0 5700~BIN  ~BIN        000000000000    ~PD DC            ~BIN        ~PD   00+
+0000000000~MERCH          ~TERM   ~HBN ~PD                ~BT   GMT ~O       ~B+
+NO    ~BK  1 
+SY ~HBN ~B.BATCH_NO %05d
+SY ~BIN ~B.ZBIN %-6.6s
+SY ~PD ~B.ZJDATE %-4.4s
+SY ~MERCH ~B.ZMERCHNO %-16.16s
+SY ~TERM ~B.ZTERMNO %-8.8s
+SY ~BNO ~B.BATCH_NO %08d
+SY ~BT ~B.ZBTIME %-6.6s
+SY ~O ~B.OFFSET %02d
+SY ~BK ~A.BKEY %05hd
+** TCR1 Batch Header
+R1 5701            K            ~MCC~MNAME                   ~MCITY       ~S ~C+
+ ~PC  ~S  K     ~PCD       ~SA                                               ~B+
+NO    ~BK  1 
+SY ~MCC ~Z.MERCH_TYPE %-4.4s
+SY ~MNAME ~Z.CARD_ACPT_NAME_LOC %-25.25s
+SY ~MCITY ~Z.CARD_ACPT_NAME_LOC.SUB~55,13 %-13.13s
+SY ~S ~Z.CARD_ACPT_REGION %-3.3s
+SY ~C ~Z.CARD_ACPT_COUNTRY %-3.3s
+SY ~PC ~Z.CARD_ACPT_PST_CODE %-5.5s
+SY ~PCD ~Z.CARD_ACPT_PST_CODE %-11.11s
+SY ~SA ~Z.SEG24_528^A1 %-50.50s
+** TCR0 Transaction Detail
+D0 5700~BIN  ~BIN     ~RPI  ~TAMT       ~CU ~PD DC~RF~CLI~PCI ~CT~ACTNO        +
+     ~PDT~TI ~TTY~TVI~CEM~CIM~ACD  ~ASC~FL        ~CBA        ~ECF       ~STAN +
+~RIA~DAT~TTI  ~RRN        ~AVS ~ACT~AI~P~BNO    ~BK  2~RIA~t~PO   ~MCC~JD  ~T~T+
+RID      ~PRANGE            ~RC ~PFID   ~CL~DE ~CS~TTS     ~SMID               +
+                                         ~SG                                   +
+                             ~UID                                              +
+                                                                               +
+                                                                               +
+                                                                               +
+             ~M~D                                                  ~NRIFEE     +
+~TRI    ~SAMT       ~TID                                                       +
+          
+SY ~TRI ~Z.ZTOKENRESPINFO %c
+SY ~RPI ~F.(RecurringPaymentIndicator) %c
+SY ~TAMT ~Z.AMT_TRAN.SUB~6,12 %-12.12s
+SY ~CU ~Z.CUR_TRAN %-3.3s
+SY ~RF ~Z.ZREVFLAG %c
+SY ~CLI ~F.(CATLevelInd) %c
+SY ~PCI ~F.(PrepaidCardInd) %c
+SY ~CT ~F.(CardType) %c
+SY ~ACTNO ~Z.PAN %-19.19s
+SY ~PDT ~Z.ZPDATE %-4.4s
+SY ~TI ~Z.ZTRANTIME %-4.4s
+SY ~TTY ~F.(TransactionType) %c
+SY ~TVI ~Z.ZTRAN_VOID_IND %c
+SY ~CEM ~Z.ZCARD_ENTRY %c
+SY ~CIM ~F.(CardholderIDMethod) %c
+SY ~TTI ~Z.ZTIME %-6.6s
+SY ~ASC ~Z.ZAUTH_SOURCE_CODE %c
+SY ~ACD ~Z.APPROVAL_CODE %-6.6s
+SY ~CBA ~Z.ADL_RQST_AMT40.SUB~6,12 %-12.12s
+SY ~ECF ~F.(ECommerceInd) %c
+SY ~STAN ~Z.SYS_TRACE_AUDIT_NO %-6.6s
+SY ~RRN ~Z.RETRIEVAL_REF_NO %-12.12s
+SY ~AVS ~Z.TRAN_UNIQUE_DATA.SUB~29,1 %c
+SY ~ACT ~F.(AcctType) %c
+SY ~AI ~Z.ZAUTHIND %c
+SY ~P ~F.(POSEntryMode) %-2.2s
+SY ~PO ~Z.EXT_POS_ENTRY_MODE %-3.3s,000
+SY ~RA ~Z.ZREIMBURSEMENT_ATTR %-3.3s
+SY ~T ~Z.TOKEN_ASSURANCE %-2.2s
+SY ~TRID ~F.(TokenRequestorId) %-11.11s
+SY ~RC ~Z.ZMSG_RESON_CODE_ACQ %-4.4s
+SY ~CL ~Z.CUR_CARD_BILL %-3.3s
+SY ~DE ~Z.DATE_EXP %-4.4s
+SY ~SMID ~Z.ZSMERCHID %-15.15s
+SY ~SG ~Z.ZSRV_GRP_SERV_CODE %-3.3s
+SY ~M ~Z.ZMSGID %-2.2s
+SY ~D ~Z.ZCCODE %-2.2s
+SY ~TID ~Z.TRANSACTION_ID %-36.36s
+SY ~FL ~F.(FilmLocator) %-11.11s
+SY ~RIA ~F.(POSDebitReimbAttr) %c
+SY ~DAT ~Z.ZDATE %-4.4s
+SY ~PRANGE ~Z.PAN_RANGE %-19.19s
+SY ~UID ~F.(Zeros) %012d
+SY ~NRIFEE ~F.(Zeros) %012d
+SY ~SAMT ~F.(Zeros) %012d
+SY ~PFID ~Z.ZPAYMENT_FID %-8.8s
+SY ~CS ~Z.ZCSEQ_NO %-3.3s
+SY ~TTS ~Z.TSTAMP_TRANS.SUB~8,6 %-6.6s
+SY ~t ~F.(NetworkTransportChannel) %-2.2s
+** TCR1 Transaction detail common
+D1 5701              ~MNAME                   ~MCITY                           +
+                                                                               +
+           9  
+** TCR7 Chip All
+CA 5707CH~AIN~ATC~CRPT           ~TAMT       ~I~CD~TCAP ~R~TVR      ~TD   ~E~TC+
+~OAMT       ~IAD                                                            ~UN+
+O    ~CVR  ~DFN                            ~AVN~TSN            ~TSC            +
+                                                                               +
+                                                                               +
+                                                                               +
+                                           ~SN                                ~+
+TCC~ISSAD                          ~CAMT       ~ISR      ~FFIND  ~AID          +
+                                                                 
+SY ~ATC ~Z.APPL_TRAN_COUNTER %-4.4s
+SY ~AIN ~Z.APPL_INTRCHG_PROF %-4.4s
+SY ~CRPT ~Z.APPL_CRYPTOGRAM %-16.16s
+SY ~CD ~Z.TERM_COUNTRY_CODE %-3.3s
+SY ~I ~Z.CRYPT_INFO_DATA %-2.2s
+SY ~TCAP ~Z.TERM_CAPABILITIES %-6.6s
+SY ~TVR ~Z.TERM_VERIFY_RESULT %-10.10s
+SY ~TD ~Z.TRAN_DATE %-6.6s
+SY ~R ~Z.TERMINAL_TYPE %-2.2s
+SY ~E ~Z.TRAN_TYPE %-2.2s
+SY ~TC ~Z.TRAN_CURRENCY_CODE %-3.3s
+SY ~OAMT ~Z.AMOUNT_OTHER %-12.12s
+SY ~IAD ~Z.ISS_APPL_DATA %-64.64s
+SY ~UNO ~Z.UNPREDICTABLE_NO %-8.8s
+SY ~CVR ~Z.CARDH_VER_RESULT %-6.6s
+SY ~DFN ~Z.DEDICATED_FILE_NAM %-32.32s
+SY ~AVN ~Z.APPL_VERSION_NO %-4.4s
+SY ~TSN ~Z.TERM_SERIAL_NO %-16.16s
+SY ~SN ~Z.CARD_SEQ_NO %-3.3s
+SY ~TSC ~Z.TRAN_SEQ_COUNTER %-8.8s
+SY ~TCC ~Z.TRAN_CATEGORY_CODE %-4.4s
+SY ~ISSAD ~Z.ISS_AUTH_DATA %-32.32s
+SY ~CAMT ~Z.CRYPTOGRAM_AMOUNT %-12.12s
+SY ~ISR ~Z.ISS_SCRIPT_RESULT %-10.10s
+SY ~FFIND ~Z.FORM_FACTOR_IND %-8.8s
+SY ~AID ~Z.APPL_ID %-32.32s
+** TCR4 Transaction detail VISA
+DV 5704            SD                                                          +
+                                                                               +
+           2 
+** TCR4 VisaSMS Transaction
+VS 5704            SD                                                          +
+                                                                               +
+             
+** TCR1 DinersIntlChargeDetailRecord
+DI 5701DI~Y                                                                    +
+                                                                               +
+                                                                               +
+          ~EPI~CAV~NRID          ~AC~ZP 00000000~V~ADT~U~W~X~ATN            ~Z~+
+IPA                         
+SY ~Y ~Z.ZCTYPE %-2.2s
+SY ~ADT ~Z.ZAUTH_TYPE %c
+SY ~EPI ~Z.ZECOM_PAY_IND %c
+SY ~CAV ~Z.ZECOMIND %-4.4s
+SY ~NRID ~Z.DATA_PRIV_ISS.SUB~3,15 %-15.15s
+SY ~AC ~Z.ZACT_CODE %-3.3s
+SY ~ZP ~Z.ZPOSFLGS %-4.4s
+SY ~V ~Z.ZCAVV_RESULT %-2.2s
+SY ~U ~Z.ZPAUTH %-2.2s
+SY ~W ~Z.ZSFRESP_CODE %-2.2s
+SY ~X ~Z.ZCAVVIND %-2.2s
+SY ~ATN ~Z.ZATN %-16.16s
+SY ~Z ~Z.ZVAUTH %-2.2s
+SY ~IPA ~Z.ZIPADD %-8.8s
+** TCR2 Amex CAPN Batch Header
+AC 5702            ~CAID                                                       +
+                                                                               +
+           1C
+SY ~CAID ~Z.AMEX_SE_NUMBER %-15.15s
+** TCR1 Amex Transaction Detail Advice Basic
+AB 5701            0201~DZ          ~TIDE          ~CRDF         ~CID          +
+ ~MCINFO                                 ~RRN                                ~B+
+NO    ~BK  2C                                         ~8 
+SY ~DZ ~Z.DATE_EXP %-4.4s
+SY ~TIDE ~Z.ZTRAN_IDE %-15.15s
+SY ~CRDF ~F.(AMXCardHolderFlags) %-12.12s
+SY ~CID ~Z.CARD_ACPT_ID %-15.15s
+SY ~MCINFO ~Z.ZMERCH_CINFO %-40.40s
+SY ~8 ~Z.ZECOM_IND %-2.2s
+** TCR4 Amex Transaction Detail Location
+TL 5704            0299~LNAME                                ~MADD             +
+                    ~CITY                ~S ~C ~PSTCD         ~MCC~SID         +
+                 
+SY ~LNMAE ~Z.CARD_ACPT_NAME_LOC.SUB~0,25 %-38.38s
+SY ~MADD ~Z.CARD_ACPT_NAME_LOC.SUB~26,28 %-38.38s
+SY ~CITY ~Z.CARD_ACPT_NAME_LOC.SUB~55,21 %-21.21s
+SY ~PSTCD ~Z.CARD_ACPT_PST_CODE %-15.15s
+SY ~SID ~Z.SELLER_ID %-20.20s
+** TCR3 Dinners Chip Additional Record
+IC 5703XM        ~BN~9 001~SN~AID                            ~AIN~ATC~CRPT     +
+          ~CAMT       ~OAMT       ~I~CVR  ~DFN                            ~TSN +
+   ~IAD                                                            ~ISSAD      +
+                    ~ISRES                                            ~CD~AVN~T+
+CAP ~R~TVR      ~TD   ~E~TC~UNO    
+SY ~BN ~A.BATCH_NO %03d
+SY ~9 ~A.BKEY %03d
+SY ~ISRES ~Z.ISS_SCRIPT_RESULT %-50.50s
+** TCR0 Batch Trailer
+T0 5700~BIN  ~BIN                       N~PD DC                        ~BTC   ~+
+BNAMT         ~0~BTCR  ~BGAMT         0000000000000000                       ~B+
+NO    ~BK  3 
+SY ~BTC ~A.BCNT %07hd
+SY ~BNAMT ~A.BNETAMT %015.0f
+SY ~0 ~A.BASIGN %-2.2s
+SY ~BTCR ~A.BKEY %07hd
+SY ~BGAMT ~A.BGROSSAMT %015.0f
+** TCR91 Batch Trailer
+T1 9100~BIN   ~PD 000000000000000000000000000~TBN  ~TC1                      ~B+
+TTC                      ~BNAMT                                                +
+             
+SY ~TBN ~B.BATCH_NO %06d
+SY ~TC1 ~A.TCR %012d
+SY ~BTTC ~B.TTCNT %09d
+** TCR92 File Trailer
+T2 9200       ~PD 000000000000000000000000000~TBN  ~TC9                      ~F+
+TTC                      ~TNAMT                                                +
+             
+SY ~TC9 ~B.TTCR %012d
+SY ~TNAMT ~Z.TNETAMT %015.0f
+SY ~FTTC ~B.TTCNT %09d
