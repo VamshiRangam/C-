@@ -1,0 +1,3 @@
+string strTRAN_UNIQUE_DATA(m_hGenericSegment[0].get("TRAN_UNIQUE_DATA"));
+            strTRAN_UNIQUE_DATA.resize(50, ' ');
+            pTC57_TCR0_TxnDetail->cAVSResponseCode = strTRAN_UNIQUE_DATA[29];
