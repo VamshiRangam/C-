@@ -166,7 +166,7 @@ TC57TransactionFile::TC57TransactionFile (const char* pszClass)
    m_hFunction["IsfcCode"] = &TC57TransactionFile::setIsfcCode;
    m_hFunction["ChannelInd"] = &TC57TransactionFile::setChannelInd;
    m_hFunction["NetworkTransportChannel"] = &TC57TransactionFile::setNetworkTransportChannel;
-   m_hFunction["AVSresponseCode"] = &TC57TransactionFile::setAVSresponseCode;
+   //m_hFunction["AVSresponseCode"] = &TC57TransactionFile::setAVSresponseCode;
   //## end report::TC57TransactionFile::TC57TransactionFile%6811780801BD.body
 }
 
@@ -420,6 +420,15 @@ void TC57TransactionFile::setAcctType (string& strValue)
       strValue.assign("0", 1);
   //## end report::TC57TransactionFile::setAcctType%67F3F02603AC.body
 }
+
+/*void TC57TransactionFile::setAVSresponseCode(string& strValue)
+{
+   //## begin report::TC57TransactionFile::setAVSresponseCode%6890A2BC01F8.body preserve=yes
+   string strTRAN_UNIQUE_DATA(m_pGenericSegment->get("TRAN_UNIQUE_DATA"));
+   strTRAN_UNIQUE_DATA.resize(50, ' ');
+   strValue.assign(1, strTRAN_UNIQUE_DATA[29]);
+   //## end report::TC57TransactionFile::setAVSresponseCode%6890A2BC01F8.body
+} */
 
 void TC57TransactionFile::setCardHolderFlags (string& strValue)
 {
@@ -1035,20 +1044,6 @@ void TC57TransactionFile::setPOSDebitReimbAttr (string& strValue)
       strValue = pREF_DATA_ISS_EVES_AUS->cREIMBURSEMENT_ATTR;
    }
   //## end report::TC57TransactionFile::setPOSDebitReimbAttr%67F3F00800D2.body
-}
-
-void TC57TransactionFile::setAVSresponseCode(string& strValue)
-{
-   string strTRAN_UNIQUE_DATA(m_pGenericSegment->get("TRAN_UNIQUE_DATA"));
-   strTRAN_UNIQUE_DATA.resize(50, ' ');
-   if (strTRAN_UNIQUE_DATA.length() > 29)
-   {
-      strValue.assign(1, strTRAN_UNIQUE_DATA[29]);
-   }
-   else
-   {
-      strValue.assign(1, ' ');
-   }
 }
 
 void TC57TransactionFile::setPOSEntryMode (string& strValue)
