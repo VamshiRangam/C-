@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BQIDownloadResponseDescriptor batchID="162910900" name="BDM5B112">
+<Environment></Environment>
+   <Member>
+   <Name>INT653</Name>
+   </Member>
+   <Timestamp>2025-03-23T09:32:28+86:10</Timestamp>
+   <Package id="1" name="RDM5B112" seq="0"/>
+</BQIDownloadResponseDescriptor>

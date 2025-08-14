@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>                                      
+<ResponsePackage name="RDM5B112" seq="0" batchID="162910900">
+<Environment>Production</Environment>
+<Member>
+<Name>INT653</Name>
+</Member>
+<Timestamp>2025-03-23T09:32:28+86:10</Timestamp>
+<BQIDownloadResponse >
+<TotalCases>1</TotalCases>
+<ProcessingDate>2025-08-13</ProcessingDate>
+<CaseManifest memberRole="I"> 
+<User id="DNSERVER" ></User> 
+<FraudData> 
+<TransactionInfo> 
+<AccountNumberPrefix>400472</AccountNumberPrefix>
+<AccountNumberSuffix>1108</AccountNumberSuffix> 
+<RetrievalReferenceNumber>406700000094</RetrievalReferenceNumber>
+<SystemTraceAuditNumber>000069</SystemTraceAuditNumber> 
+<TranDate>2025-08-12</TranDate> 
+<Amount currency="840" >120.00</Amount> 
+<NetworkID>0018</NetworkID> 
+</TransactionInfo> 
+<FraudReport> 
+<AccountNumberPrefix>400472</AccountNumberPrefix>
+<AccountNumberSuffix>1108</AccountNumberSuffix>
+<TranDate>2025-08-12</TranDate> 
+<Amount currency="840" >120.00</Amount> 
+<DisputeReasonCode>F1</DisputeReasonCode>
+<MemberMsgEditText>Testing<aug mu></MemberMsgEditText>
+</FraudReport> 
+</FraudData> 
+</CaseManifest>
+</BQIDownloadResponse>
+</ResponsePackage>
