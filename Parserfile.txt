@@ -1,0 +1,124 @@
+bool BulkQuestionnaireImport::parseFile (visaexception::DNHandlerBase* pDNHandlerBase, database::GenerationDataGroup& hGenerationDataGroup, bool bAudit)
+{
+  //## begin visaexception::BulkQuestionnaireImport::parseFile%420D1F9A0261.body preserve=yes
+   int lRecordCount = 0;
+   size_t lByteCount = 0;
+   size_t lMaxRecordLength = 0;
+   if (!hGenerationDataGroup.getSize(&lRecordCount, &lByteCount, &lMaxRecordLength, true) )
+      return UseCase::setSuccess(false);
+   if (lByteCount > INT_MAX - 4097)
+      return UseCase::setSuccess(false);
+   char* psMemBufInputSource = new char[lByteCount + 1 + 4096];
+   if (!psMemBufInputSource)
+      return UseCase::setSuccess(false);
+   char* p = psMemBufInputSource;
+   char* q = 0;
+   size_t m = 0;
+   int n = lByteCount + 1;
+   while (n > 1 && hGenerationDataGroup.read(p,n,&m,false,true))
+   {
+      p += m;
+      n -= m;
+   }
+   *p = '\0';
+   char escChar[6][7] = {"&quot;","&apos;","&amp;","&gt;","&lt;","&"};
+   int cmpLen[6] = {6,6,5,4,4,1};
+   int repLen[6] = {6,6,0,0,0,1};
+   unsigned char substituteChar[5][2] = {'|',' ','[','(',']',')',0xBA,'(',0xBB,')'};
+   for(int i = 0; i < lByteCount; i++)
+   {
+      if(memcmp(psMemBufInputSource+i,"<QuestionnaireData",18) == 0  && hGenerationDataGroup.getCONTEXT_KEY() == "DNRDM5")
+      {  //convert questionnaire data into a single element
+         int k = 18;
+         while(psMemBufInputSource[i+k] != '>') //handle spaces before ending >
+            k++;
+         k++;
+         while(memcmp(psMemBufInputSource+i+k,"</QuestionnaireData>",20) != 0 && 
+               (i+k) < lByteCount) 
+         {
+            if(psMemBufInputSource[i+k] == '<')
+               psMemBufInputSource[i+k] = '{';
+            if(psMemBufInputSource[i+k] == '>')
+               psMemBufInputSource[i+k] = '}';
+            k++;
+         }
+         i += k+19;
+      }
+      else if (memcmp(psMemBufInputSource + i, "<MemberMsgEditText", 18) == 0 && hGenerationDataGroup.getCONTEXT_KEY() == "DNRDM5")
+      {
+         int k = 18;
+         while (psMemBufInputSource[i + k] != '>') //handle spaces before ending >
+            k++;
+         k++;
+         while (memcmp(psMemBufInputSource + i + k, "</MemberMsgEditText>", 20) != 0 && (i + k) < lByteCount)
+         {
+            if (psMemBufInputSource[i + k] == '<')
+               psMemBufInputSource[i + k] = ' ';
+            if (psMemBufInputSource[i + k] == '>')
+               psMemBufInputSource[i + k] = ' ';
+            k++;
+         }
+         i += k + 19;
+      }
+      else if(memcmp(psMemBufInputSource+i,"&#",2) == 0)
+      {  //examples: &#39; &#x27; &#x01cd;
+         for(int j = 3; j < 12; j++)
+         {
+            if(psMemBufInputSource[i+j] == ';')
+            {
+               memset(psMemBufInputSource+i,' ',j+1);
+               i += j;
+               break;
+            }
+         }
+      }
+      else if(psMemBufInputSource[i] == '&')
+      {  //blank out or skip over unwanted escape sequences
+         for(int j = 0; j < 6; j++)
+         {
+            if(memcmp(psMemBufInputSource+i,&escChar[j][0],cmpLen[j]) == 0)
+            {
+               memcpy(psMemBufInputSource+i,psMemBufInputSource+i+repLen[j],strlen(psMemBufInputSource+i+repLen[j]));
+               if (repLen[j] > 0)
+                  lByteCount -= repLen[j];
+               else
+                  i += cmpLen[j]-1;
+               break;
+            }
+         }
+      }
+      else
+      {
+         for(int j = 0; j < 5; j++)
+         {  //replace characters
+            if(psMemBufInputSource[i] == substituteChar[j][0])
+            {
+               psMemBufInputSource[i] = substituteChar[j][1];
+               break;
+            }
+         }
+      }
+   }
+   psMemBufInputSource[lByteCount] = '\0';
+#ifdef MVS
+   CodeTable::translate(psMemBufInputSource,lByteCount,CodeTable::CX_EBCDIC_TO_ASCII);
+#endif
+   for(int i = 0; i < lByteCount; i++)
+   {
+      if ((psMemBufInputSource[i] < 0x20) || (psMemBufInputSource[i] > 0x7E))
+         psMemBufInputSource[i] = 0x20;
+   }
+   XMLCh sBufld[2] = {1,0};
+   if (bAudit)
+      pDNHandlerBase->initializeAudit(hGenerationDataGroup.getCONTEXT_KEY(),hGenerationDataGroup.datasetName());
+   MemBufInputSource hMemBufInputSource((XMLByte*)psMemBufInputSource,(unsigned int)lByteCount,&sBufld[0]);
+   SAXParser hSAXParser;
+   hSAXParser.setDocumentHandler(pDNHandlerBase);
+   hSAXParser.setErrorHandler(pDNHandlerBase);
+   hSAXParser.parse(hMemBufInputSource);
+   delete [] psMemBufInputSource;
+   if (pDNHandlerBase->getAbort())
+      return UseCase::setSuccess(false);
+   return true;
+  //## end visaexception::BulkQuestionnaireImport::parseFile%420D1F9A0261.body
+}
