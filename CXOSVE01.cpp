@@ -333,6 +333,7 @@ bool BulkQuestionnaireImport::parseFile (visaexception::DNHandlerBase* pDNHandle
    int cmpLen[6] = {6,6,5,4,4,1};
    int repLen[6] = {6,6,0,0,0,1};
    unsigned char substituteChar[5][2] = {'|',' ','[','(',']',')',0xBA,'(',0xBB,')'};
+   string NetworkID;
    for(int i = 0; i < lByteCount; i++)
    {
       if(memcmp(psMemBufInputSource+i,"<QuestionnaireData",18) == 0  && hGenerationDataGroup.getCONTEXT_KEY() == "DNRDM5")
@@ -351,6 +352,37 @@ bool BulkQuestionnaireImport::parseFile (visaexception::DNHandlerBase* pDNHandle
             k++;
          }
          i += k+19;
+      }
+      if (memcmp(psMemBufInputSource + i, "<NetworkID>", 11) == 0)
+      {
+         const char* start = psMemBufInputSource + i + 11;
+         const char* end = strstr(start, "</NetworkID>");
+         if (end)
+         {
+            size_t len = end - start;
+            NetworkID = string(start, len);
+            size_t elemLen = (end - (psMemBufInputSource + i)) + 12;
+            i += elemLen - 1;
+         }
+      }
+      else if (memcmp(psMemBufInputSource + i, "<MemberMsgEditText", 18) == 0 && hGenerationDataGroup.getCONTEXT_KEY() == "DNRDM5"
+               && NetworkID == "0018")
+      {
+         int k = 18;
+         while (psMemBufInputSource[i + k] != '>') //handle spaces before ending >
+            k++;
+         k++;
+         while (memcmp(psMemBufInputSource + i + k, "</MemberMsgEditText>", 20) != 0 && 
+                (i + k) < lByteCount)
+         {
+            char currentChar = psMemBufInputSource[i + k];
+            if (currentChar == '<' || currentChar == '>')
+            {
+               psMemBufInputSource[i + k] = ' ';
+            }
+            k++;
+         }
+         i += k + 19;
       }
       else if(memcmp(psMemBufInputSource+i,"&#",2) == 0)
       {  //examples: &#39; &#x27; &#x01cd;
