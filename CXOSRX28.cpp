@@ -758,6 +758,12 @@ bool ISTTC57TransactionFile::write_TCR0_TxnDetail (IF::FlatFile& hFlatFile)
             pTC57_TCR0_TxnDetail->cRecurringPaymentIndicator = pADL_DATA_PRIV_ACQ->cPOSEnvironment;
          }
       }
+      if (Extract::instance()->getCustomCode() == "CBA" && m_hGenericSegment[0].get("REF_DATA_ISS_FMT") == "6")
+      {
+         mastercardcis::segREF_DATA_ISS* pREF_DATA_ISS;
+         pREF_DATA_ISS = (struct mastercardcis::segREF_DATA_ISS*)m_szREF_DATA_ISS;
+         pTC57_TCR0_TxnDetail->cCATLevelInd = pREF_DATA_ISS->sPOS_DATA_CODE[9];
+      }
       if (strPROC_ID_ISS_B == "VISA")
       {
          getGenericValue("TC57_VI_P_E_MOD", m_hGenericSegment[0].get("POS_CRD_DAT_IN_MOD"), strToValue);
