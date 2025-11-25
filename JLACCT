@@ -1,0 +1,583 @@
+bool Format::XMLtoJSON (string& strText)
+{
+  //## begin reusable::Format::XMLtoJSON%64959BCE02DC.body preserve=yes
+   for (int j = strText.length() - 1; j >= 0; --j)
+   {
+      if (strText[j] == '\\')
+         strText.replace(j, 1, "\\\\", 2);
+      if (strText[j] == '"' && !((j > 0 && strText[j - 1] == '>') || (j + 1 < strText.length() && strText[j + 1] == '<')))
+         strText.replace(j, 1, "\\\"", 2);
+   }
+   vector<string> hToken;
+   string strKeep("<>");
+   Buffer::parse(strText,"<>",hToken,&strKeep);
+   set<string> hArray;
+   hArray.insert("column");
+   hArray.insert("note");
+   hArray.insert("predicate");
+   hArray.insert("row");
+   hArray.insert("tab");
+   hArray.insert("value");
+   string strArray[3][2];
+   int j = 0;
+   strText.assign("{",1);
+   bool bTag = false;
+   bool bNumeric = false;
+   short siValue = 0;
+   string strTag;
+   reusable::Deque<string> hTag;
+   for (int i = 0;i < hToken.size();++i)
+   {
+      trim(hToken[i]);
+      if (hToken[i] == "<")
+      {
+         if (siValue == 1)
+         {
+            strText.append("{",1);
+            siValue = 0;
+         }
+         bTag = true;
+      }
+      else
+      if (hToken[i] == ">")
+         ;
+      else
+      if (bTag)
+      {
+         bTag = false;
+         if (hToken[i][0] == '/')
+         {
+            if (hToken[i] == "/root")
+               continue;
+            if (siValue != 2)
+               strText.append("}",1);
+            siValue = 0;
+            string strTemp(hToken[i]);
+            strTemp.erase(0,1);
+            set<string>::iterator p = hArray.find(strTemp);
+            if (p != hArray.end()
+               && ((i + 3 < hToken.size()
+               && strTemp != hToken[i + 3])
+               || i + 3 > hToken.size()))
+            {
+               strText.append("]",1);
+            }
+         }
+         else
+         {
+            if (hToken[i] == "root")
+               continue;
+            if (strText[strText.length() - 1] == '"'
+               || strText[strText.length() - 1] == ']'
+               || strText[strText.length() - 1] == '}'
+               || bNumeric)
+            {
+               strText.append(",", 1);
+               bNumeric = false;
+            }
+            size_t pos = 0;
+            if ((pos = hToken[i].find("type=")) != string::npos)
+            {
+               if (memcmp(hToken[i].data() + pos + 5, "\\\"Numeric\\\"", hToken[i].length() - pos - 4) == 0)
+               {
+                  hToken[i].erase(pos - 1);
+                  bNumeric = true;
+               }
+            }
+            bool b1 = true;
+            bool b2 = false;
+            set<string>::iterator p = hArray.find(hToken[i]);
+            if (p != hArray.end())
+            {
+               b1 = false;
+               string strTemp("/",1);
+               strTemp += hToken[i];
+               if (hToken[i - 3] != strTemp)
+                  b2 = true;
+            }
+            if (b1 || b2)
+            {
+               strText.append("\"",1);
+               strText += hToken[i];
+               strText.append("\":",2);
+               if (p != hArray.end())
+                  strText.append("[",1);
+            }
+            siValue = 1;
+         }
+      }
+      else
+      if (siValue == 1)
+      {
+         if (hToken[i][0] != '"'
+            && bNumeric == false)
+            strText.append("\"",1);
+         strText += hToken[i];
+         if (hToken[i][0] != '"'
+            && bNumeric == false)
+            strText.append("\"",1);
+         siValue = 2;
+      }
+   }
+   strText.append("}",1);
+   size_t pos = string::npos;
+   while ((pos = strText.find("&lt;")) != string::npos)
+      strText.replace(pos, 4, "<", 1);
+   while ((pos = strText.find("&gt;")) != string::npos)
+      strText.replace(pos, 4, ">", 1);
+   while ((pos = strText.find("~COMMA!")) != string::npos)
+      strText.replace(pos,7,",",1);
+   return true;
+  //## end reusable::Format::XMLtoJSON%64959BCE02DC.body
+}
+
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+bool Format::XMLtoJSON (string& strText)
+{
+  //## begin reusable::Format::XMLtoJSON%64959BCE02DC.body preserve=yes
+   for (int j = strText.length() - 1; j >= 0; --j)
+   {
+      if (strText[j] == '\\')
+         strText.replace(j, 1, "\\\\", 2);
+      if (strText[j] == '"' && !((j > 0 && strText[j - 1] == '>') || (j + 1 < strText.length() && strText[j + 1] == '<')))
+         strText.replace(j, 1, "\\\"", 2);
+   }
+   vector<string> hToken;
+   string strKeep("<>");
+   Buffer::parse(strText,"<>",hToken,&strKeep);
+   set<string> hArray;
+   hArray.insert("column");
+   hArray.insert("note");
+   hArray.insert("predicate");
+   hArray.insert("row");
+   hArray.insert("tab");
+   hArray.insert("value");
+   string strArray[3][2];
+   int j = 0;
+   strText.assign("{",1);
+   bool bTag = false;
+   bool bNumeric = false;
+   short siValue = 0;
+   string strTag;
+   reusable::Deque<string> hTag;
+   for (int i = 0;i < hToken.size();++i)
+   {
+      trim(hToken[i]);
+      if (hToken[i] == "<")
+      {
+         if (siValue == 1)
+         {
+            strText.append("{",1);
+            siValue = 0;
+         }
+         bTag = true;
+      }
+      else
+      if (hToken[i] == ">")
+         ;
+      else
+      if (bTag)
+      {
+         bTag = false;
+         if (hToken[i][0] == '/')
+         {
+            if (hToken[i] == "/root")
+               continue;
+            if (siValue != 2)
+               strText.append("}",1);
+            siValue = 0;
+            string strTemp(hToken[i]);
+            strTemp.erase(0,1);
+            set<string>::iterator p = hArray.find(strTemp);
+            if (p != hArray.end()
+               && ((i + 3 < hToken.size()
+               && strTemp != hToken[i + 3])
+               || i + 3 > hToken.size()))
+            {
+               strText.append("]",1);
+            }
+         }
+         else
+         {
+            if (hToken[i] == "root")
+               continue;
+            if (strText[strText.length() - 1] == '"'
+               || strText[strText.length() - 1] == ']'
+               || strText[strText.length() - 1] == '}'
+               || bNumeric)
+            {
+               strText.append(",", 1);
+               bNumeric = false;
+            }
+            size_t pos = 0;
+            if ((pos = hToken[i].find("type=")) != string::npos)
+            {
+               if (memcmp(hToken[i].data() + pos + 5, "\\\"Numeric\\\"", hToken[i].length() - pos - 4) == 0)
+               {
+                  hToken[i].erase(pos - 1);
+                  bNumeric = true;
+               }
+            }
+            bool b1 = true;
+            bool b2 = false;
+            set<string>::iterator p = hArray.find(hToken[i]);
+            if (p != hArray.end())
+            {
+               b1 = false;
+               string strTemp("/",1);
+               strTemp += hToken[i];
+               if (hToken[i - 3] != strTemp)
+                  b2 = true;
+            }
+            if (b1 || b2)
+            {
+               strText.append("\"",1);
+               strText += hToken[i];
+               strText.append("\":",2);
+               if (p != hArray.end())
+                  strText.append("[",1);
+            }
+            siValue = 1;
+         }
+      }
+      else
+      if (siValue == 1)
+      {
+         string val = hToken[i];
+         if (val.size() > 1 && val[0] == '{' && val[val.size() - 1] == '}')
+         {
+            strText.append(val);
+         }
+         else {
+            if (!bNumeric && val[0] != '"')
+               strText.append("\"", 1);
+            strText += hToken[i];
+            if (!bNumeric && val[0] != '"')
+               strText.append("\"", 1);
+         }
+         siValue = 2;
+      }
+   }
+   strText.append("}",1);
+   size_t pos = string::npos;
+   while ((pos = strText.find("&lt;")) != string::npos)
+      strText.replace(pos, 4, "<", 1);
+   while ((pos = strText.find("&gt;")) != string::npos)
+      strText.replace(pos, 4, ">", 1);
+   while ((pos = strText.find("~COMMA!")) != string::npos)
+      strText.replace(pos,7,",",1);
+   return true;
+  //## end reusable::Format::XMLtoJSON%64959BCE02DC.body
+}
+
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+//## begin module%1.10%.codegen_version preserve=yes
+//   Read the documentation to learn more about C++ code generator
+//   versioning.
+//## end module%1.10%.codegen_version
+
+//## begin module%68CD56EA0202.cm preserve=no
+//## end module%68CD56EA0202.cm
+
+//## begin module%68CD56EA0202.cp preserve=no
+//	Copyright (c) 1997 - 2022
+//	FIS
+//## end module%68CD56EA0202.cp
+
+//## Module: CXOSJX47%68CD56EA0202; Package body
+//## Subsystem: JXDLL%645AEC9A0298
+//## Source file: C:\Repos\datanavigatorserver\Windows\Build\Dn\Server\Library\Jxdll\CXOSJX47.cpp
+
+//## begin module%68CD56EA0202.additionalIncludes preserve=no
+//## end module%68CD56EA0202.additionalIncludes
+
+//## begin module%68CD56EA0202.includes preserve=yes
+//## end module%68CD56EA0202.includes
+
+#ifndef CXOSMN05_h
+#include "CXODMN05.hpp"
+#endif
+#ifndef CXOSRU08_h
+#include "CXODRU08.hpp"
+#endif
+#ifndef CXOSRU11_h
+#include "CXODRU11.hpp"
+#endif
+#ifndef CXOSRU12_h
+#include "CXODRU12.hpp"
+#endif
+#ifndef CXOSRU34_h
+#include "CXODRU34.hpp"
+#endif
+#ifndef CXOSBS09_h
+#include "CXODBS09.hpp"
+#endif
+#ifndef CXOSBS26_h
+#include "CXODBS26.hpp"
+#endif
+#ifndef CXOSEX61_h
+#include "CXODEX61.hpp"
+#endif
+#ifndef CXOSDB02_h
+#include "CXODDB02.hpp"
+#endif
+#ifndef CXOSES03_h
+#include "CXODES03.hpp"
+#endif
+#ifndef CXOSBS23_h
+#include "CXODBS23.hpp"
+#endif
+#ifndef CXOSES01_h
+#include "CXODES01.hpp"
+#endif
+#ifndef CXOSEX17_h
+#include "CXODEX17.hpp"
+#endif
+#ifndef CXOSJX59_h
+#include "CXODJX61.hpp"
+#endif
+
+//## begin module%68CD56EA0202.declarations preserve=no
+//## end module%68CD56EA0202.declarations
+
+//## begin module%68CD56EA0202.additionalDeclarations preserve=yes
+//## end module%68CD56EA0202.additionalDeclarations
+
+
+//## Modelname: DataNavigator Foundation::RESTCommand_CAT%645AEC55037E
+namespace restcommand {
+//## begin restcommand%645AEC55037E.initialDeclarations preserve=yes
+//## end restcommand%645AEC55037E.initialDeclarations
+
+// Class restcommand::AccountEntriesCommand 
+
+ AccountEntriesCommand::AccountEntriesCommand()
+  //## begin AccountEntriesCommand::AccountEntriesCommand%68CD59E7008E_const.hasinit preserve=no
+  //## end AccountEntriesCommand::AccountEntriesCommand%68CD59E7008E_const.hasinit
+  //## begin AccountEntriesCommand::AccountEntriesCommand%68CD59E7008E_const.initialization preserve=yes
+  :RESTCommand("/rest/datanavigator/resolve/accountentries/v1.0.0", "S0003D", "@##JLACCT ")
+  //## end AccountEntriesCommand::AccountEntriesCommand%68CD59E7008E_const.initialization
+{
+  //## begin restcommand::AccountEntriesCommand::AccountEntriesCommand%68CD59E7008E_const.body preserve=yes
+   memcpy(m_sID, "JX61", 4);
+  //## end restcommand::AccountEntriesCommand::AccountEntriesCommand%68CD59E7008E_const.body
+}
+
+AccountEntriesCommand::AccountEntriesCommand(Handler* pSuccessor)
+  //## begin restcommand::AccountEntriesCommand::AccountEntriesCommand%68CD5DF9020C.hasinit preserve=no
+   :m_pszBuffer(0),
+  //## end restcommand::AccountEntriesCommand::AccountEntriesCommand%68CD5DF9020C.hasinit
+  //## begin restcommand::AccountEntriesCommand::AccountEntriesCommand%68CD5DF9020C.initialization preserve=yes
+    RESTCommand("/rest/datanavigator/resolve/accountentries/v1.0.0", "S0003D", "@##JLACCT ")
+  //## end restcommand::AccountEntriesCommand::AccountEntriesCommand%68CD5DF9020C.initialization
+{
+  //## begin restcommand::AccountEntriesCommand::AccountEntriesCommand%68CD5DF9020C.body preserve=yes
+   memcpy(m_sID, "JX61", 4);
+   m_pSuccessor = pSuccessor;
+   m_hXMLText.add('R', &m_hGenericSegment);
+   m_hXMLText.add('X', segment::SOAPSegment::instance());
+   m_pXMLItem = new XMLItem();
+   m_pszBuffer = new char[8192];
+   //## end restcommand::AccountEntriesCommand::AccountEntriesCommand%68CD5DF9020C.body
+}
+
+
+AccountEntriesCommand::~AccountEntriesCommand()
+{
+  //## begin restcommand::AccountEntriesCommand::~AccountEntriesCommand%68CD59E7008E_dest.body preserve=yes
+    delete[] m_pszBuffer;
+  //## end restcommand::AccountEntriesCommand::~AccountEntriesCommand%68CD59E7008E_dest.body
+}
+
+
+
+ //## Other Operations (implementation)
+bool AccountEntriesCommand::execute()
+ {
+    //## begin restcommand::AccountEntriesCommand::execute%68CD5E5700C8.body preserve=yes
+    UseCase hUseCase("CLIENT", "## JX61 AccountEntries");
+
+    if (!m_pXMLDocument)
+#ifdef MVS
+       m_pXMLDocument = new XMLDocument("JCL", "RJLACCT", &m_hRow, &m_hXMLText);
+#else
+       m_pXMLDocument = new XMLDocument("SOURCE", "CXORJX61", &m_hRow, &m_hXMLText);
+#endif
+
+    m_pXMLDocument->reset();
+    m_pXMLItem->reset();
+    m_pXMLDocument->setMaximumSize(64000);
+    m_pXMLDocument->setSuppressEmptyTags(false);
+    int i = parse();
+    m_pXMLDocument->add("root");
+    if (i != 0)
+    {
+       SOAPSegment::instance()->setRtnCde('3');
+       return reply();
+    }
+    hQuery.reset();
+    CaseSegment::instance()->setPresence(true);
+    CaseSegment::instance()->bind(hQuery);
+    hQuery.setBasicPredicate("EMS_CASE", "PROCESSING_SOURCE", "=", m_pXMLItem->get("caseSource").c_str());
+    auto_ptr<SelectStatement> pSelectStatement((SelectStatement*)DatabaseFactory::instance()->create("SelectStatement"));
+    bool b = pSelectStatement->execute(hQuery);
+    if (b == false
+       || pSelectStatement->getRows() == 0)
+    {
+       m_pXMLDocument->revert();
+       SOAPSegment::instance()->setRtnCde(b ? '2' : '5');
+       return reply();
+    }
+    else
+    {
+       bool bStatus = EMSRulesEngine::instance()->exportClientAccounting(this, m_pszBuffer);
+       SOAPSegment::instance()->setRtnCde(bStatus ? '0' : '2');
+    }
+    return reply();
+    //## end restcommand::AccountEntriesCommand::execute%68CD5E5700C8.body
+ }
+
+void AccountEntriesCommand::update(Subject* pSubject)
+{
+    if (pSubject == nullptr)
+    {
+       ++m_iRows;
+       ++m_iTotalRows;
+       if (!m_pszBuffer)
+       {
+          hQuery.setAbort(true);
+          return;
+       }
+       const char* p = m_pszBuffer;
+       size_t iReadSize = strlen(m_pszBuffer);
+       p += 4;
+       p += 4;
+       p += 8;
+       p += 22;
+       p += 4;
+       size_t iActSize = (iReadSize == 98) ? 10 : 9;
+       string Action(p, iActSize);
+       p += iActSize;
+       p += 4;
+       string Security(p, 1);
+       p += 1;
+       p += 4;
+       string Required(p);
+       size_t pos = Required.find(';');
+       if (pos != std::string::npos)
+       {
+          Required = Required.substr(0, pos);
+       }
+       m_hGenericSegment.set("Action", Action.c_str());
+       m_hGenericSegment.set("Security", Security.c_str());
+       m_hGenericSegment.set("Required", Required.c_str());
+       if (!m_pXMLDocument->add("row"))
+       {
+          m_pXMLDocument->revert();
+          hQuery.setAbort(true);
+          return;
+       }
+       UseCase::addItem();
+       return;
+    }
+    command::RESTCommand::update(pSubject);
+ }
+// Additional Declarations
+  //## begin restcommand::AccountEntriesCommand%68CD59E7008E.declarations preserve=yes
+  //## end restcommand::AccountEntriesCommand%68CD59E7008E.declarations
+
+} // namespace restcommand
+
+//## begin module%68CD56EA0202.epilog preserve=yes
+//## end module%68CD56EA0202.epilog
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+S401010000000098ACCOUNTING            0010SETTLEGL010001*0037{EMS_ACCT_HISTORY:AMOUNT_VAL:DOUBLE};
+
+S401010000000097ACCOUNTING            0009SETTLE1000001*0037{EMS_ACCT_HISTORY:AMOUNT_VAL:DOUBLE};
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+{"tab":[{"name":"AccountEntries","column":["Action","Security","Required"],"row":[{"value":["SETTLE100","*",{EMS_ACCT_HISTORY:AMOUNT_VAL:DOUBLE}]},{"value":["SETTLEGL02","*",{EMS_ACCT_HISTORY:AMOUNT_VAL:DOUBLE}]},{"value":["SETTLEGL04","*",{EMS_ACCT_HISTORY:AMOUNT_VAL:DOUBLE}]},{"value":["SETTLEGL05","*",{EMS_ACCT_HISTORY:AMOUNT_VAL:DOUBLE}]},{"value":["SETTLEGL06","*",{EMS_ACCT_HISTORY:AMOUNT_VAL:DOUBLE}]},{"value":["SETTLEGL07","*",{EMS_ACCT_HISTORY:AMOUNT_VAL:DOUBLE}]},{"value":["SETTLEGL08","*",{EMS_ACCT_HISTORY:AMOUNT_VAL:DOUBLE}]},{"value":["SETTLEGL09","*",{EMS_ACCT_HISTORY:AMOUNT_VAL:DOUBLE}]},{"value":["SETTLEGL10","*",{EMS_ACCT_HISTORY:AMOUNT_VAL:DOUBLE}]}]}],"details":{"code":"0","message":"Success"}}
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+{
+   "tab": [   {
+      "name": "AccountEntries",
+      "column":       [
+         "Action",
+         "Security",
+         "Required"
+      ],
+      "row":       [
+         {"value":          [
+            "SETTLE100",
+            "*",
+            "\"{EMS_ACCT_HISTORY:AMOUNT_VAL:DOUBLE}\""
+         ]},
+         {"value":          [
+            "SETTLEGL02",
+            "*",
+            "\"{EMS_ACCT_HISTORY:AMOUNT_VAL:DOUBLE}\""
+         ]},
+         {"value":          [
+            "SETTLEGL04",
+            "*",
+            "\"{EMS_ACCT_HISTORY:AMOUNT_VAL:DOUBLE}\""
+         ]},
+         {"value":          [
+            "SETTLEGL05",
+            "*",
+            "\"{EMS_ACCT_HISTORY:AMOUNT_VAL:DOUBLE}\""
+         ]},
+         {"value":          [
+            "SETTLEGL06",
+            "*",
+            "\"{EMS_ACCT_HISTORY:AMOUNT_VAL:DOUBLE}\""
+         ]},
+         {"value":          [
+            "SETTLEGL07",
+            "*",
+            "\"{EMS_ACCT_HISTORY:AMOUNT_VAL:DOUBLE}\""
+         ]},
+         {"value":          [
+            "SETTLEGL08",
+            "*",
+            "\"{EMS_ACCT_HISTORY:AMOUNT_VAL:DOUBLE}\""
+         ]},
+         {"value":          [
+            "SETTLEGL09",
+            "*",
+            "\"{EMS_ACCT_HISTORY:AMOUNT_VAL:DOUBLE}\""
+         ]},
+         {"value":          [
+            "SETTLEGL10",
+            "*",
+            "\"{EMS_ACCT_HISTORY:AMOUNT_VAL:DOUBLE}\""
+         ]}
+      ]
+   }],
+   "details":    {
+      "code": "0",
+      "message": "Success"
+   }
+}
