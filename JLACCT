@@ -581,3 +581,48 @@ S401010000000097ACCOUNTING            0009SETTLE1000001*0037{EMS_ACCT_HISTORY:AM
       "message": "Success"
    }
 }
+
+
+
+
+
+
+
+
+
+// ... (lines 160-170 of the XMLtoJSON function)
+      else
+      if (siValue == 1)
+      {
+         string val = hToken[i];
+         
+         // Check 1: Check for the special template string structure.
+         // It must be long enough and start/end with curly braces.
+         if (val.size() > 1 && val[0] == '{' && val[val.size() - 1] == '}')
+         {
+            // If the value is the template, it must have survived the initial escaping phase.
+            // We will check if it starts and ends with the JSON-escaped quotes: \"
+            if (val.size() > 4 && 
+                val.substr(0, 2) == "\\\"" && 
+                val.substr(val.size() - 2) == "\\\"")
+            {
+                // Strip the outer escaped quotes (e.g., \"...\" -> ...)
+                val.erase(0, 2); 
+                val.erase(val.size() - 2); 
+            }
+            
+            // Append the value without quotes, achieving the desired output
+            strText.append(val); 
+         }
+         else 
+         {
+            // Existing logic for all other string/value types (regular quoted string or numeric)
+            if (hToken[i][0] != '"' && bNumeric == false)
+               strText.append("\"", 1);
+            strText += hToken[i];
+            if (hToken[i][0] != '"' && bNumeric == false)
+               strText.append("\"", 1);
+         }
+         siValue = 2;
+      }
+// ...
