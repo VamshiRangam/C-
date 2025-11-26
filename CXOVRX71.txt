@@ -1,0 +1,117 @@
+&dot./ ADD NAME=DNOVRX28
+** TCR3 Transaction Payment service Data
+DP 5703~1~AAMT       ~VTID          ~VCD~MSC~MSI~AAMT                        ~2+
+      ~3~CR                                                      ~CN    ~MV    +
+   ~BNO    ~BK  2~SQI
+SY ~1 ~Z.ZACT_CODE %-2.2s
+SY ~AAMT ~Z.AMT_RECON_NET.SUB~6,12 %-12.12s
+SY ~VTID ~Z.VISA_TRANSACTION_ID %-15.15s
+SY ~VCD ~Z.ZVALID_CODE %-4.4s
+SY ~MSC ~Z.ZMSEQ_CNT %-4.4s
+SY ~MSI ~Z.ZMKTIND %c
+SY ~2 ~Z.ZECGI %-2.2s
+SY ~3 ~Z.ZCRDRES %-2.2s
+SY ~CR ~Z.ZCAVVRESULT %c
+SY ~CN ~Z.CUR_RECON_NET %-3.3s
+SY ~MV ~Z.ZMERCH %-10.10s
+SY ~SQI ~Z.ZSSQUALIND %c
+PD 5703~1~AAMT       ~VTID          ~VCD~MSC~MSI~AAMT                        ~2+
+      ~3~CR                                                      ~CN    ~MV    +
+   ~BNO    ~BK  2~SQI  
+** TCR99 Custom Record
+CR 5799B1~MPAN              ~4~5~C9~WI~CIFSC      ~CI~CDRA   ~DRI    ~CTP~A    +
+                                             ~OSTAN~ORRN       ~OAS     ~6~b ~T+
+ID                                                                    ~MURL    +
+                                                                               +
+           ~ON                                                            
+SY ~MPAN ~Z.MASKPAN %-19.19s
+SY ~4 ~Z.TERM_CLASS %-2.2s
+SY ~5 ~Z.TRAN_TYPE_ID %-2.2s
+SY ~DRI ~Z.DATE_RECON_ISS %-8.8s
+SY ~C9 ~Z.ZCRACT_CODE %-3.3s
+SY ~WI ~Z.TOKEN_WALLET_ID %-3.3s
+SY ~CIFSC ~F.(IsfcCode) %-12.12s
+SY ~CI ~F.(ChannelInd) %c
+SY ~CDRA ~Z.DATE_ACTION %-8.8s
+SY ~CTP ~Z.ZCHARGE_TYPE %c
+SY ~A ~Z.ZINDINFO %-2.2s
+SY ~OSTAN ~Z.{DF0B| %-6.6s
+SY ~ORRN ~Z.{DF0C| %-12.12s
+SY ~OAS ~Z.{DF07| %-4.4s
+SY ~6 ~Z.{DF08| %-2.2s
+SY ~b ~Z.{DFA1| %-2.2s
+SY ~TID ~Z.TRANSACTION_ID %-36.36s
+SY ~MURL ~Z.ZMERCH_URL %-99.99s
+SY ~ON ~Z.ONUS_IND %c
+** TCR5 Transaction Detail MC Extention
+DM 5705           ~BSN     ~BSD    ~F   ~PR~TAMT       ~SI~B~CHF               +
+          ~MAID ~TT~G~PP                                                       +
+~BNO    ~BK  2~RIA~H~AMT0       ~C0~J~AMT1       ~C1~K~AMT2       ~C2~L~AMT3   +
+    ~C3~N~AMT4       ~C4~Q~AMT5       ~C5                                   ~MF+
+ID      ~MSMID         ~ISID                                                   +
+                            000000000000                                       +
+                                     ~DSTID                              ~AHAV +
+                          ~PPT~POS                                             +
+                                                                               +
+                                                                               +
+                                                                               +
+                                   ~PROC              ~CO             ~CMC~AL1 +
+~L2~L3~L4                                                ~d                    +
+                       ~ADN                               ~TLID                +
+   ~GEO                                            ~ZDCOM                      +
+                             ~OCI~L5~L6~L7                                     +
+             
+SY ~BSD ~Z.ZBSDATE %-4.4s
+SY ~F ~Z.ZECSIND %-3.3s
+SY ~PR ~Z.ZPRIND %-3.3s
+SY ~SI ~Z.SRV_GRP_INTCHG_IND %c
+SY ~B ~Z.SRV_GRP_SERV_CODE %-2.2s
+SY ~CHF ~F.(MCICardHolderFlags) %-12.12s
+SY ~MAID ~Z.ZMCAID %-6.6s
+SY ~TT ~Z.ZTTID %-3.3s
+SY ~G ~Z.ZTMODIND %-2.2s
+SY ~PP ~Z.ZPPOL_PGM_DATA %-3.3s
+SY ~H ~Z.RQST_T0 %-2.2s
+SY ~AMT0 ~Z.RQST_A0.SUB~6,12 %-12.12s
+SY ~C0 ~Z.RQST_C0 %-3.3s
+SY ~J ~Z.RQST_T1 %-2.2s
+SY ~AMT1 ~Z.RQST_A1.SUB~6,12 %-12.12s
+SY ~C1 ~Z.RQST_C1 %-3.3s
+SY ~K ~Z.RQST_T2 %-2.2s
+SY ~AMT2 ~Z.RQST_A2.SUB~6,12 %-12.12s
+SY ~C2 ~Z.RQST_C2 %-3.3s
+SY ~L ~Z.RQST_T3 %-2.2s
+SY ~AMT3 ~Z.RQST_A3.SUB~6,12 %-12.12s
+SY ~C3 ~Z.RQST_C3 %-3.3s
+SY ~N ~Z.RQST_T4 %-2.2s
+SY ~AMT4 ~Z.RQST_A4.SUB~6,12 %-12.12s
+SY ~C4 ~Z.RQST_C4 %-3.3s
+SY ~Q ~Z.RQST_T5 %-2.2s
+SY ~AMT5 ~Z.RQST_A5.SUB~6,12 %-12.12s
+SY ~C5 ~Z.RQST_C5 %-3.3s
+SY ~MFID ~Z.ZMCPFID %-11.11s
+SY ~MSMID ~Z.ZMCSMID %-15.15s
+SY ~ISID ~Z.ZINDSID %-11.11s
+SY ~DSTID ~Z.ZDIR_SERV_TRAN_ID %-36.36s
+SY ~AHAV ~Z.MCI_UCAF_DATA %-32.32s
+SY ~CO ~Z.ZOCNTRY %-3.3s
+SY ~CMC ~Z.ZCIMICAT %-4.4s
+SY ~AL1 ~Z.ZAL01 %-5.5s
+SY ~L2 ~Z.ZAL02 %-3.3s
+SY ~L3 ~Z.ZAL03 %-3.3s
+SY ~L4 ~Z.ZAL04 %-3.3s
+SY ~L5 ~Z.ZAL05 %-3.3s
+SY ~L6 ~Z.ZAL06 %c
+SY ~L7 ~Z.ZAL07 %-19.19s
+SY ~d ~Z.ZDEVICE_TYPE %2.2s
+SY ~OCI ~Z.ZONE_CRED_EXC_IND %c
+SY ~ZDCOM ~Z.ZDIGCOM %57.57s
+SY ~ADN ~Z.ZADL_NAT_DATA %-29.29s
+SY ~TLID ~Z.ZTRAN_LINK_ID %-22.22s
+SY ~GEO ~Z.ZGEOLOC %-40.40s
+SY ~BSN ~Z.ZBSETNO %-9.9s
+SY ~PPT ~Z.ZPROGRAM_PROTOCOL %c
+SY ~POS ~Z.ZPOS_DEVICE_TYPE %c
+SY ~PROC ~Z.ZPROMO_CODE %-6.6s
+** TCR0 Transaction Detail
+SY ~AVS ~Z.TRAN_UNIQUE_DATA.SUB~29,1 %c
