@@ -1,0 +1,34 @@
+MMO-11643
+
+The void of the pre-authorization should not be sent to IST/Clearing. The ODE_STAN field of the void and the STAN of the pre-authorization will be used to link the two transactions. Therefore, when processing the DCF file transactions to IST in the TC57 modules, it is necessary to add code that checks the original transaction. This can be done by using the reversal's ODE_STAN and the original's STAN to determine whether the original transaction is a pre-authorization (100 message) or a settled transaction (200). If it is a reversal of a 100 message, then do not include this reversal in the TC57. Please note, Reversal for pre-auth completion is still required to be sent to IST/clearing.
+
+
+
+
+MMO-12224
+
+The void reversal of preauth's tran type id is set as 0000002000 and it is supposed to be 0000001000, probably this needs to be modified during the replication for TXNACT.
+
+Issue: In CTAF file TRAN_TYPE_ID (7th character) should have been '1' for Void authorization transaction. But it is reporting as '2'
+
+Below Pre-auth capture void transaction was performed on 21st Apr Sample RRN for reference – 511107234387
+
+
+
+
+Actual Result:
+
+Pre-Auth - 0000001100-Purchase Pre-Auth From FND
+Capture - 0000002200-Pre-Auth Purchase From FND
+Void - 0000002000-Purchase From FND
+
+Expected Result:
+
+Pre-Auth - 0000001100-Purchase Pre-Auth From FND
+Capture - 0000002200-Pre-Auth Purchase From FND
+Void - 0000001000-Purchase From FND
+
+
+
+As a developer, I want to modify the DN transaction handling logic to correctly process void scenarios, so that we could see '1' in 7th position of TRAN_TYPE_ID for Void authorization transaction in CTAF file.
+
