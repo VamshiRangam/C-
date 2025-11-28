@@ -32,3 +32,5 @@ Void - 0000001000-Purchase From FND
 
 As a developer, I want to modify the DN transaction handling logic to correctly process void scenarios, so that we could see '1' in 7th position of TRAN_TYPE_ID for Void authorization transaction in CTAF file.
 
+There were two issues we addressed via a script before loading the file into DN. We needed to link the pre-auth and settled transactions, and assign the correct settled transaction type ID to the second settled transaction.
+Due to limitations in our current framework, specifically, the inability to retain the first transaction in memory and link it with the second, Rad and I decided to handle this logic externally through the script, outside the system.
