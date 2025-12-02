@@ -1,0 +1,108 @@
+The requirements describe two distinct issues related to **Void Authorizations (Reversals)** and data quality that must be fixed within the `report::ISTTC57TransactionFile::distribute()` function.
+
+Here are the detailed C++ code changes required, applicable only to `CXOSRX28.cpp`.
+
+-----
+
+## 1\. Requirement: Void Pre-Authorization Filtering (Suppression)
+
+**Goal:** Prevent a Reversal/Void of an original **Pre-Authorization (MTI 100)** from being written to the TC57 file, while allowing Reversals/Voids of **Settled Transactions (MTI 200/Completion)** to proceed.
+
+This requires a database lookup to determine the original transaction's MTI, using the original trace number.
+
+### Required Changes in `distribute()`
+
+Insert the following logic at the beginning of `distribute()`, immediately after the `populate` call and before any TC57 data preparation.
+
+**Assumption:** This fix requires access to the original transaction's data (specifically its MTI). Since the transaction is a Reversal, the linking is typically done using the Reversal's **Original Data Element (ODE)** field for the System Trace Audit Number (STAN), which corresponds to the original transaction's **STAN**.
+
+```cpp
+bool ISTTC57TransactionFile::distribute (string& strDATA_BUFFER, IF::FlatFile& hFlatFile)
+{
+    // ... [Existing setup and populate logic] ...
+    if (!populate(strDATA_BUFFER, m_hGenericSegment[0]))
+        return UseCase::setSuccess(false);
+
+    // --- START MODIFICATION 1: VOID PRE-AUTH FILTERING ---
+    string strMTI = m_hGenericSegment[0].get("MTI");
+    string strOriginalStan = m_hGenericSegment[0].get("ODE_SYS_TRACE_AUDIT_NO"); // Assumed field name for original STAN
+
+    // Check if the current transaction is a Reversal/Void
+    if (strMTI == "140" || strMTI == "240")
+    {
+        // 1. PERFORM DATABASE LOOKUP: 
+        // Query the database to retrieve the MTI of the original transaction 
+        // using the 'strOriginalStan' to filter. 
+        
+        // NOTE: This logic assumes a Query object is configured in initialize() 
+        // to retrieve the MTI based on the SYS_TRACE_AUDIT_NO (STAN).
+        
+        /* * PSEUDO-CODE for database logic:
+         * reusable::Query hLookupQuery(m_pContext);
+         * hLookupQuery.setSQL("SELECT MTI FROM HISTORY_TABLE WHERE SYS_TRACE_AUDIT_NO = :STAN");
+         * hLookupQuery.setParam("STAN", strOriginalStan);
+         * hLookupQuery.execute();
+         * string strOriginalMti = hLookupQuery.fetchString("MTI");
+         */
+        
+        // ** ACTUAL IMPLEMENTATION (Must be replaced with correct DB/Query execution): **
+        string strOriginalMti = lookupOriginalMti(strOriginalStan); 
+
+        // 2. Check if the original MTI was a Pre-Authorization ("100")
+        if (strOriginalMti == "100")
+        {
+            // 3. Suppress the Reversal/Void (do not write to TC57)
+            return UseCase::setSuccess(true); 
+        }
+        
+        // If original MTI was "200" (Completion), it continues to process below.
+        // Reversals of Pre-Auth Completions are thus correctly sent.
+    }
+    // --- END MODIFICATION 1: VOID PRE-AUTH FILTERING ---
+
+    // ... [Rest of the existing distribute() function logic] ...
+}
+```
+
+-----
+
+## 2\. Requirement: `TRAN_TYPE_ID` Correction for Void Authorization
+
+**Goal:** Ensure the 7th character of the `TRAN_TYPE_ID` field for a Void Authorization is set to `'1'` (e.g., changing `0000002000` to `0000001000`). This is crucial for down-stream systems like **TXNACT** or external clearing files (CTAF).
+
+### Required Changes in `distribute()`
+
+Insert the following logic **after** the custom field parsing loop and **before** the `write_TCR0_TxnDetail` call, as the correction must be applied to `m_hGenericSegment[0]` before the TCRs are generated.
+
+```cpp
+// ... [Existing custom field parsing loop ends here] ...
+
+    for (int i = 0; i < CUSTOM_FIELDS; i++)
+    {
+        // ... [Existing custom field logic] ...
+    }
+
+    // --- START MODIFICATION 2: TRAN_TYPE_ID CORRECTION ---
+    string strCurrentTranType = m_hGenericSegment[0].get("TRAN_TYPE_ID");
+
+    // Identify if the transaction is a Void Authorization (MTI 140/240) AND check the field length
+    if ((m_hGenericSegment[0].get("MTI") == "140" || m_hGenericSegment[0].get("MTI") == "240") && strCurrentTranType.length() >= 7)
+    {
+        // Check if the 7th character (index 6) is the incorrect value '2'
+        if (strCurrentTranType[6] == '2')
+        {
+            // Set the 7th character to the required value '1'
+            strCurrentTranType[6] = '1';
+            
+            // Overwrite the segment with the corrected value
+            m_hGenericSegment[0].set("TRAN_TYPE_ID", strCurrentTranType);
+            
+            // NOTE: This correction is required for the output file/downstream systems.
+        }
+    }
+    // --- END MODIFICATION 2: TRAN_TYPE_ID CORRECTION ---
+    
+    string strBatchKey = m_hGenericSegment[0].get("RPT_LVL_ID_B") + m_hGenericSegment[0].get("NET_TERM_ID");
+    // ... [Rest of the existing distribute() function logic, starting with batch control break] ...
+}
+```
