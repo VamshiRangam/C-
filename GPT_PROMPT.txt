@@ -1,0 +1,8 @@
+Chat Gpt Prompts , add as last word with these any Prompts in GPT to get clear details:
+
+Feynman
+/human
+TLDR
+EL5 or EL10
+listify
+textmode
