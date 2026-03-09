@@ -22,6 +22,7 @@
 
 //## begin module%605D32D10055.includes preserve=yes
 #include "CXODTM06.hpp"
+#include "CXODIF16.hpp"
 //## end module%605D32D10055.includes
 
 #ifndef CXOSDB01_h
@@ -109,50 +110,54 @@ AmericanExpressGRRCN::AmericanExpressGRRCN()
 AmericanExpressGRRCN::~AmericanExpressGRRCN()
 {
   //## begin networkreconciliation::AmericanExpressGRRCN::~AmericanExpressGRRCN%605D2E81033B_dest.body preserve=yes
-   set<string>::iterator p;
-   for (p = m_hCreditReport.begin();p != m_hCreditReport.end();++p)
+   string strRecord;
+   if (!Extract::instance()->find("CXOPMZ00",strRecord))
    {
+      set<string>::iterator p;
+      for (p = m_hCreditReport.begin();p != m_hCreditReport.end();++p)
       {
-      ExportFile hExportFile("BALAMX","AP",(*p),getDATE_RECON_ISS(),"240000");
-      hExportFile.setDX_STATE("FW");
-      hExportFile.setTSTAMP_INITIATED(Clock::instance()->getYYYYMMDDHHMMSSHN());
-      if (!hExportFile.trigger())
-         Database::instance()->setTransactionState(Database::ROLLBACKREQUIRED);
-      }
-      {
-      ExportFile hExportFile("RCNAMX","AP",(*p),getDATE_RECON_ISS(),"240000");
-      hExportFile.setDX_STATE("FW");
-      hExportFile.setTSTAMP_INITIATED(Clock::instance()->getYYYYMMDDHHMMSSHN());
-      if (!hExportFile.trigger())
-         Database::instance()->setTransactionState(Database::ROLLBACKREQUIRED);
-      }
-      {
-      ExportFile hExportFile("INTAMX","AP",(*p),getDATE_RECON_ISS(),"240000");
-      hExportFile.setDX_STATE("FW");
-      hExportFile.setTSTAMP_INITIATED(Clock::instance()->getYYYYMMDDHHMMSSHN());
-      if (!hExportFile.trigger())
-         Database::instance()->setTransactionState(Database::ROLLBACKREQUIRED);
-      }
-      {
-      ExportFile hExportFile("IPAAMX","AP",(*p),getDATE_RECON_ISS(),"240000");
-      hExportFile.setDX_STATE("FW");
-      hExportFile.setTSTAMP_INITIATED(Clock::instance()->getYYYYMMDDHHMMSSHN());
-      if (!hExportFile.trigger())
-         Database::instance()->setTransactionState(Database::ROLLBACKREQUIRED);
-      }
-      {
-      ExportFile hExportFile("FEEAMX","AP",(*p),getDATE_RECON_ISS(),"240000");
-      hExportFile.setDX_STATE("FW");
-      hExportFile.setTSTAMP_INITIATED(Clock::instance()->getYYYYMMDDHHMMSSHN());
-      if (!hExportFile.trigger())
-         Database::instance()->setTransactionState(Database::ROLLBACKREQUIRED);
-      }
-      {
-      ExportFile hExportFile("DSPAMX","AP",(*p),getDATE_RECON_ISS(),"240000");
-      hExportFile.setDX_STATE("FW");
-      hExportFile.setTSTAMP_INITIATED(Clock::instance()->getYYYYMMDDHHMMSSHN());
-      if (!hExportFile.trigger())
-         Database::instance()->setTransactionState(Database::ROLLBACKREQUIRED);
+         {
+         ExportFile hExportFile("BALAMX","AP",(*p),getDATE_RECON_ISS(),"240000");
+         hExportFile.setDX_STATE("FW");
+         hExportFile.setTSTAMP_INITIATED(Clock::instance()->getYYYYMMDDHHMMSSHN());
+         if (!hExportFile.trigger())
+            Database::instance()->setTransactionState(Database::ROLLBACKREQUIRED);
+         }
+         {
+         ExportFile hExportFile("RCNAMX","AP",(*p),getDATE_RECON_ISS(),"240000");
+         hExportFile.setDX_STATE("FW");
+         hExportFile.setTSTAMP_INITIATED(Clock::instance()->getYYYYMMDDHHMMSSHN());
+         if (!hExportFile.trigger())
+            Database::instance()->setTransactionState(Database::ROLLBACKREQUIRED);
+         }
+         {
+         ExportFile hExportFile("INTAMX","AP",(*p),getDATE_RECON_ISS(),"240000");
+         hExportFile.setDX_STATE("FW");
+         hExportFile.setTSTAMP_INITIATED(Clock::instance()->getYYYYMMDDHHMMSSHN());
+         if (!hExportFile.trigger())
+            Database::instance()->setTransactionState(Database::ROLLBACKREQUIRED);
+         }
+         {
+         ExportFile hExportFile("IPAAMX","AP",(*p),getDATE_RECON_ISS(),"240000");
+         hExportFile.setDX_STATE("FW");
+         hExportFile.setTSTAMP_INITIATED(Clock::instance()->getYYYYMMDDHHMMSSHN());
+         if (!hExportFile.trigger())
+            Database::instance()->setTransactionState(Database::ROLLBACKREQUIRED);
+         }
+         {
+         ExportFile hExportFile("FEEAMX","AP",(*p),getDATE_RECON_ISS(),"240000");
+         hExportFile.setDX_STATE("FW");
+         hExportFile.setTSTAMP_INITIATED(Clock::instance()->getYYYYMMDDHHMMSSHN());
+         if (!hExportFile.trigger())
+            Database::instance()->setTransactionState(Database::ROLLBACKREQUIRED);
+         }
+         {
+         ExportFile hExportFile("DSPAMX","AP",(*p),getDATE_RECON_ISS(),"240000");
+         hExportFile.setDX_STATE("FW");
+         hExportFile.setTSTAMP_INITIATED(Clock::instance()->getYYYYMMDDHHMMSSHN());
+         if (!hExportFile.trigger())
+            Database::instance()->setTransactionState(Database::ROLLBACKREQUIRED);
+         }
       }
    }
   //## end networkreconciliation::AmericanExpressGRRCN::~AmericanExpressGRRCN%605D2E81033B_dest.body
